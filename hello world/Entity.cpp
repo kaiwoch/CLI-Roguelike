@@ -60,3 +60,13 @@ void Entity::MoveDown(Map& map) {
         pos = downPos;
     }
 }
+
+bool Entity::EntityIsNear(Entity object) {
+    if (-1 <= pos.GetX() - object.pos.GetX() and pos.GetX() - object.pos.GetX() <= 1) {
+        if (-1 <= pos.GetY() - object.pos.GetY() and pos.GetY() - object.pos.GetY() <= 1) {
+            return true;
+        }
+    }
+    return false;
+}
+

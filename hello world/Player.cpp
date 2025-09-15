@@ -31,3 +31,7 @@ void Player::MoveDown(Map& map) {
     map.SetElement(pos, symbol);
 }
 
+void Player::Use(Entity object) {
+   
+}
+

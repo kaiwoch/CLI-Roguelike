@@ -1,6 +1,8 @@
 #include "Game.h"
 #include "Player.h"
 #include "Mage.h"
+#include "Warrior.h"
+#include "Chest.h"
 #include <iostream>
 
 Game::Game() {
@@ -10,6 +12,8 @@ Game::Game() {
 void Game::Run() {
     Player player(map);
     Mage mage(map);
+    Warrior warrior(map);
+    Chest chest(map);
     
     while(isRunning) {
         char input;
@@ -17,6 +21,7 @@ void Game::Run() {
         map.PrintMap();
         
         mage.RandomeAI(map);
+        warrior.RandomeAI(map);
         
         std::cin >> input;
         switch (input) {
@@ -32,6 +37,8 @@ void Game::Run() {
             case 's':
                 player.MoveDown(map);
                 break;
+            case 'e':
+                
             default:
                 break;
         }

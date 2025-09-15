@@ -1,15 +1,13 @@
-#include "Map.h"
 #include "Entity.h"
 #pragma once
 
-class Player : public Entity {
+class Warrior : public Entity {
 public:
-    Player(Map& map);
+    Warrior(Map& map);
     void SpawnEntity(Map& map) override;
     void MoveLeft(Map& map) override;
     void MoveRight(Map& map) override;
     void MoveUp(Map& map) override;
     void MoveDown(Map& map) override;
-    
-    void Use(Entity object);
+    void RandomeAI(Map& map);
 };
