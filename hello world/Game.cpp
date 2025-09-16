@@ -13,10 +13,14 @@ void Game::Run() {
     Player player(map);
     Mage mage(map);
     Warrior warrior(map);
-    Chest chest;
-    map.SpawnObject(&chest);
+    Chest chest_001;
+    Chest chest_002;
+    map.SpawnObject(&chest_001);
+    map.SpawnObject(&chest_002);
     
     while(isRunning) {
+        std::cout << "Player pos:" << std::endl;
+        std::cout << "X: " << player.GetPosition().GetX() << " | " << "Y: " << player.GetPosition().GetY() << std::endl;
         char input;
         
         map.PrintMap();

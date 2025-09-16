@@ -71,3 +71,7 @@ bool Entity::EntityIsNear(Entity object) {
     return false;
 } */
 
+Coordinates Entity::GetPosition() {
+    return pos;
+}
+
