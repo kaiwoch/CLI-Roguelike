@@ -16,7 +16,9 @@ public:
     virtual void MoveUp(Map& map);
     virtual void MoveDown(Map& map);
     
+    
     //костыль
-    bool EntityIsNear(Entity object);
+    //bool EntityIsNear(Entity object);
+    
 };
 

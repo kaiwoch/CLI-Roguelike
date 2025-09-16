@@ -11,5 +11,5 @@ public:
     void MoveUp(Map& map) override;
     void MoveDown(Map& map) override;
     
-    void Use(Entity object);
+    void Use(Map& map);
 };

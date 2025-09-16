@@ -1,4 +1,3 @@
-#include "Map.h"
 #include "Coordinates.h"
 #include <time.h>
 #include <iostream>
@@ -11,6 +10,9 @@ protected:
     bool isOpened;
 public:
     Interectable();
-    virtual void SpawnObject(Map& map);
     virtual void Open();
+    
+    Coordinates GetPosition();
+    char GetSymbol();
+    void SetPosition(Coordinates position);
 };

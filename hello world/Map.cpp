@@ -35,3 +35,29 @@ void Map::PrintMap() {
         std::cout << std::endl;
     }
 }
+
+void Map::SpawnObject(Interectable* object) {
+    objects.push_back(object);
+    srand(time(NULL));
+    while(true){
+        Coordinates tmpl_position;
+        tmpl_position.SetX(rand() % Size().GetX());
+        tmpl_position.SetY(rand() % Size().GetY());
+        if(GetElement(tmpl_position) == ' ') {
+            object->SetPosition(tmpl_position);
+            SetElement(object->GetPosition(), object->GetSymbol());
+            break;
+        }
+    }
+}
+
+Interectable* Map::GetNearstInterectableObject(Coordinates position) {
+    for (unsigned int i = 0; i < objects.size(); i++) {
+        if (-1 <= position.GetX() - objects[i]->GetPosition().GetX() and position.GetX() - objects[i]->GetPosition().GetX() <= 1) {
+            if (-1 <= position.GetY() - objects[i]->GetPosition().GetY() and position.GetY() - objects[i]->GetPosition().GetY() <= 1) {
+                return objects[i];
+            }
+        }
+    }
+    return nullptr;
+}

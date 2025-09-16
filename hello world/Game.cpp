@@ -13,7 +13,8 @@ void Game::Run() {
     Player player(map);
     Mage mage(map);
     Warrior warrior(map);
-    Chest chest(map);
+    Chest chest;
+    map.SpawnObject(&chest);
     
     while(isRunning) {
         char input;
@@ -38,7 +39,8 @@ void Game::Run() {
                 player.MoveDown(map);
                 break;
             case 'e':
-                
+                player.Use(map);
+                break;
             default:
                 break;
         }

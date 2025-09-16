@@ -3,7 +3,6 @@
 
 class Chest : public Interectable {
 public:
-    Chest(Map& map);
-    void SpawnObject(Map& map) override;
+    Chest();
     void Open() override;
 };

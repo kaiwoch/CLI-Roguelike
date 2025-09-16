@@ -31,7 +31,10 @@ void Player::MoveDown(Map& map) {
     map.SetElement(pos, symbol);
 }
 
-void Player::Use(Entity object) {
-   
+void Player::Use(Map& map) {
+    auto object = map.GetNearstInterectableObject(pos);
+    if (object != nullptr) {
+        std::cout << object->GetSymbol() << std::endl;
+    }
 }
 
