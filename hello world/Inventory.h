@@ -5,8 +5,8 @@
 
 class Inventory {
 private:
-    std::vector<Item*> inventory;
+    std::vector<Item> inventory;
 public:
     void PrintInventory();
-    void AddItem(Item* item);
+    void AddItem(Item item);
 };

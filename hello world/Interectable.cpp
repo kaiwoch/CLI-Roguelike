@@ -20,3 +20,7 @@ void Interectable::SetPosition(Coordinates position) {
 char Interectable::GetSymbol() {
     return symbol;
 }
+
+void Interectable::PrintInventory() {
+    
+}

@@ -34,7 +34,7 @@ void Player::MoveDown(Map& map) {
 void Player::Use(Map& map) {
     auto object = map.GetNearstInterectableObject(pos);
     if (object != nullptr) {
-        std::cout << object->GetSymbol() << std::endl;
+        object->PrintInventory();
     }
 }
 

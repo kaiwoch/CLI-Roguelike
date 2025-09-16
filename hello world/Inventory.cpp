@@ -2,13 +2,13 @@
 
 void Inventory::PrintInventory() {
     for (unsigned int i = 0; i < inventory.size(); i++) {
-        std::cout << inventory[i]->GetName() << std::endl;
+        std::cout << inventory[i].GetName() << std::endl;
     }
 }
 
-void Inventory::AddItem(Item* item) {
+void Inventory::AddItem(Item item) {
     for (unsigned int i = 0; i < inventory.size(); i++) {
-        if(item->GetName() == inventory[i]->GetName()){
+        if(item.GetName() == inventory[i].GetName()){
                 return;
             }
         }
