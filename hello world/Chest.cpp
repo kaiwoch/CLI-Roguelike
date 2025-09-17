@@ -3,7 +3,6 @@
 #include <vector>
 
 Chest::Chest() : Interectable() {
-    srand(time(NULL));
     Item item_001("apple");
     Item item_002("banana");
     Item item_003("water");
