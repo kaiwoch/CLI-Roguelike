@@ -5,9 +5,11 @@
 
 class Inventory {
 private:
-    std::vector<Item> inventory;
+    std::vector<Item*> inventory;
 public:
     void PrintInventory();
-    void AddItem(Item item);
-    std::vector<Item> GetInventory();
+    void AddItem(Item* item);
+    void RemoveItem(Item* item);
+    std::vector<Item*> GetInventory();
+    Item* ChoiseItem(unsigned int index);
 };

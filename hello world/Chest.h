@@ -1,6 +1,7 @@
 #include "Interectable.h"
 #include "Inventory.h"
 #include "Item.h"
+#include "ItemRing.h"
 #pragma once
 
 class Chest : public Interectable {

@@ -15,5 +15,7 @@ public:
     char GetElement(Coordinates coordinates);
     void SetElement(Coordinates coordinates, char object);
     void SpawnObject(Interectable* object);
+    void DeleteObject(Interectable* object);
     Interectable* GetNearstInterectableObject(Coordinates position);
+    void GenerateMap();
 };

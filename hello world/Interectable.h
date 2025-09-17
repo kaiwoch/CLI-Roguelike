@@ -16,6 +16,8 @@ public:
     Coordinates GetPosition();
     char GetSymbol();
     void SetPosition(Coordinates position);
+    void SetIsOpened(bool isOpened);
+    bool GetIsOpened();
     
     virtual ~Interectable() = default;
 };

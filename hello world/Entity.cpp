@@ -2,6 +2,8 @@
 
 Entity::Entity() {
     walkSpeed = 1;
+    max_hp = 100;
+    hp = 100;
 }
 
 void Entity::SpawnEntity(Map& map){
@@ -77,5 +79,9 @@ Coordinates Entity::GetPosition() {
 
 void Entity::PrintInventory() {
     inventory.PrintInventory();
+}
+
+int Entity::GetHP() {
+    return hp;
 }
 

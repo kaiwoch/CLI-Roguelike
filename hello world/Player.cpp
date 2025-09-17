@@ -1,6 +1,8 @@
 #include "Player.h"
 
 Player::Player(Map& map) : Entity() {
+    max_hp = 100;
+    hp = 50;
     symbol = 'P';
     SpawnEntity(map);
 }
@@ -34,9 +36,25 @@ void Player::MoveDown(Map& map) {
 void Player::Use(Map& map) {
     auto object = map.GetNearstInterectableObject(pos);
     if (object != nullptr) {
-        //object->PrintInventory();
         object->Open(inventory);
-        inventory.PrintInventory();
+        //object->SetIsOpened(true);
+        map.DeleteObject(object);
+    }
+}
+
+void Player::Heal(int healAmount) {
+    if (hp + healAmount > max_hp) {
+        hp = max_hp;
+    } else {
+        hp += healAmount;
+    }
+}
+
+void Player::UseItem(unsigned int index) {
+    auto item = inventory.ChoiseItem(index);
+    if (item != nullptr) {
+        item->UseItem(*this);
+        inventory.RemoveItem(item);
     }
 }
 

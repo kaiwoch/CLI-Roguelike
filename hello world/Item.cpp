@@ -7,3 +7,7 @@ Item::Item(std::string name) {
 std::string Item::GetName() {
     return name;
 }
+
+void Item::UseItem(Player& player) {
+
+}

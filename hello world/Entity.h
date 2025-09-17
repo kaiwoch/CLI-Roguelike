@@ -6,6 +6,8 @@
 
 class Entity {
 protected:
+    int max_hp;
+    int hp;
     Coordinates pos;
     int walkSpeed;
     char symbol;
@@ -19,6 +21,7 @@ public:
     virtual void MoveDown(Map& map);
     virtual void PrintInventory();
     Coordinates GetPosition();
+    int GetHP();
     
     
     //костыль

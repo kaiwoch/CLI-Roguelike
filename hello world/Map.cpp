@@ -2,14 +2,7 @@
 #include <iostream>
 
 Map::Map() {
-    map = {{'#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#'},
-        {'#', ' ', ' ', ' ', ' ', '#', ' ', ' ', ' ', ' ', '#'},
-        {'#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#'},
-        {'#', ' ', ' ', '#', ' ', ' ', ' ', ' ', ' ', ' ', '#'},
-        {'#', ' ', '#', '#', '#', ' ', ' ', ' ', '#', ' ', '#'},
-        {'#', ' ', ' ', '#', ' ', ' ', ' ', ' ', ' ', ' ', '#'},
-        {'#', ' ', ' ', '#', ' ', ' ', ' ', ' ', ' ', ' ', '#'},
-        {'#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#'}};
+    GenerateMap();
 }
 
 Coordinates Map::Size() {
@@ -51,6 +44,16 @@ void Map::SpawnObject(Interectable* object) {
     }
 }
 
+void Map::DeleteObject(Interectable* object) {
+    std::cout << objects.size() << std::endl;
+    SetElement(object->GetPosition(), ' ');
+    for (unsigned int i = 0; i < objects.size(); i++) {
+        if (object == objects[i]) {
+            objects.erase(objects.cbegin() + i);
+        }
+    }
+}
+
 Interectable* Map::GetNearstInterectableObject(Coordinates position) {
     for (unsigned int i = 0; i < objects.size(); i++) {
         if (-1 <= position.GetX() - objects[i]->GetPosition().GetX() and position.GetX() - objects[i]->GetPosition().GetX() <= 1) {
@@ -60,4 +63,20 @@ Interectable* Map::GetNearstInterectableObject(Coordinates position) {
         }
     }
     return nullptr;
+}
+
+void Map::GenerateMap() {
+    std::vector<char> lines;
+    int map_size = 15;
+    for (unsigned int y = 0; y < map_size; y++) {
+        for (unsigned int x = 0; x < map_size; x++) {
+            if (x == 0 or y == 0 or x == map_size-1 or y == map_size-1) {
+                lines.push_back('#');
+            } else {
+                lines.push_back(' ');
+            }
+        }
+        map.push_back(lines);
+        lines = {};
+    }
 }

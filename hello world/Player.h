@@ -12,4 +12,6 @@ public:
     void MoveDown(Map& map) override;
     
     void Use(Map& map);
+    void UseItem(unsigned int);
+    void Heal(int healAmount);
 };

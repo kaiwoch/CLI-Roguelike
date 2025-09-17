@@ -20,7 +20,7 @@ void Game::Run() {
     
     while(isRunning) {
         std::cout << "Player pos:" << std::endl;
-        std::cout << "X: " << player.GetPosition().GetX() << " | " << "Y: " << player.GetPosition().GetY() << std::endl;
+        std::cout << "X: " << player.GetPosition().GetX() << " | " << "Y: " << player.GetPosition().GetY() << " | HP: " << player.GetHP() << std::endl;
         char input;
         
         map.PrintMap();
@@ -44,6 +44,17 @@ void Game::Run() {
                 break;
             case 'e':
                 player.Use(map);
+                break;
+            case 'i':
+                while(true) {
+                    player.PrintInventory();
+                    int choise = 0;
+                    std::cin >> choise;
+                    if (choise == 0) {
+                        break;
+                    }
+                    player.UseItem(choise);
+                }
                 break;
             default:
                 break;
