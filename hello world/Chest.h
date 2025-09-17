@@ -8,6 +8,6 @@ private:
     Inventory inventory;
 public:
     Chest();
-    void Open() override;
+    void Open(Inventory& inventory) override;
     void PrintInventory() override;
 };

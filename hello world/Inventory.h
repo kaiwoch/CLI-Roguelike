@@ -9,4 +9,5 @@ private:
 public:
     void PrintInventory();
     void AddItem(Item item);
+    std::vector<Item> GetInventory();
 };

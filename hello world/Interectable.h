@@ -1,6 +1,7 @@
 #include "Coordinates.h"
 #include <time.h>
 #include <iostream>
+#include "Inventory.h"
 #pragma once
 
 class Interectable {
@@ -10,7 +11,7 @@ protected:
     bool isOpened;
 public:
     Interectable();
-    virtual void Open();
+    virtual void Open(Inventory& object_inventory);
     virtual void PrintInventory();
     Coordinates GetPosition();
     char GetSymbol();

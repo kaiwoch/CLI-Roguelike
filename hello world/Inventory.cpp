@@ -14,3 +14,7 @@ void Inventory::AddItem(Item item) {
         }
     inventory.push_back(item);
 }
+
+std::vector<Item> Inventory::GetInventory() {
+    return inventory;
+}

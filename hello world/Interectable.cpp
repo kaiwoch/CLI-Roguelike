@@ -5,10 +5,6 @@ Interectable::Interectable(){
     
 }
 
-void Interectable::Open(){
-    std::cout << "Open!" << std::endl;
-}
-
 Coordinates Interectable::GetPosition() {
     return pos;
 }
@@ -22,5 +18,9 @@ char Interectable::GetSymbol() {
 }
 
 void Interectable::PrintInventory() {
+    
+}
+
+void Interectable::Open(Inventory &object_inventory) {
     
 }

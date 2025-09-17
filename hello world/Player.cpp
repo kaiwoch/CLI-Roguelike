@@ -34,7 +34,9 @@ void Player::MoveDown(Map& map) {
 void Player::Use(Map& map) {
     auto object = map.GetNearstInterectableObject(pos);
     if (object != nullptr) {
-        object->PrintInventory();
+        //object->PrintInventory();
+        object->Open(inventory);
+        inventory.PrintInventory();
     }
 }
 

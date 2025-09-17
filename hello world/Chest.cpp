@@ -19,8 +19,10 @@ Chest::Chest() : Interectable() {
 }
 
 
-void Chest::Open() {
-    
+void Chest::Open(Inventory& object_inventory) {
+    for (unsigned int i = 0; i < inventory.GetInventory().size(); i++) {
+        object_inventory.AddItem(inventory.GetInventory()[i]);
+    }
 }
 
 void Chest::PrintInventory() {

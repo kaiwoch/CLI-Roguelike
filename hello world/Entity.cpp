@@ -75,3 +75,7 @@ Coordinates Entity::GetPosition() {
     return pos;
 }
 
+void Entity::PrintInventory() {
+    inventory.PrintInventory();
+}
+

@@ -1,5 +1,6 @@
 #include "Map.h"
 #include "Coordinates.h"
+#include "Inventory.h"
 #include <time.h>
 #pragma once
 
@@ -8,6 +9,7 @@ protected:
     Coordinates pos;
     int walkSpeed;
     char symbol;
+    Inventory inventory;
 public:
     Entity();
     virtual void SpawnEntity(Map& map);
@@ -15,6 +17,7 @@ public:
     virtual void MoveRight(Map& map);
     virtual void MoveUp(Map& map);
     virtual void MoveDown(Map& map);
+    virtual void PrintInventory();
     Coordinates GetPosition();
     
     
