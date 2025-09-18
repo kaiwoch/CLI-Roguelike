@@ -3,6 +3,10 @@
 
 Map::Map() {
     GenerateMap();
+    for (int i = 0; i < 6; i++) {
+        SmoothMap();
+        FillOuterWalls();
+    }
 }
 
 Coordinates Map::Size() {
@@ -66,17 +70,74 @@ Interectable* Map::GetNearstInterectableObject(Coordinates position) {
 }
 
 void Map::GenerateMap() {
-    std::vector<char> lines;
-    int map_size = 15;
-    for (unsigned int y = 0; y < map_size; y++) {
-        for (unsigned int x = 0; x < map_size; x++) {
-            if (x == 0 or y == 0 or x == map_size-1 or y == map_size-1) {
-                lines.push_back('#');
+    srand(time(NULL));
+    width = 20;
+    height = 20;
+    fillPercent = 30;
+
+    std::vector<char> line;
+
+    for (unsigned int y = 0; y < width; y++) {
+        for (unsigned int x = 0; x < height; x++) {
+            if (rand() % 100 < fillPercent) {
+                line.push_back('#');
             } else {
-                lines.push_back(' ');
+                line.push_back(' ');
             }
         }
-        map.push_back(lines);
-        lines = {};
+        map.push_back(line);
+        line = {};
+    }
+}
+
+int Map::GetNeighbourCount(unsigned int x, unsigned int y) {
+    int count = 0;
+    int low_x = 1;
+    int low_y = 1;
+
+    if (x == 0) {
+        low_x = 0;
+    }
+    if (y == 0) {
+        low_y = 0;
+    }
+        
+    for (unsigned int dy = y - low_y; dy < y + 2; dy++) {
+        if (dy == width) {
+            break;
+        }
+        for (unsigned int dx = x - low_x; dx < x + 2; dx++) {
+            if (dx == height) {
+                break;
+            }
+            if (map[dy][dx] == '#') {
+                count++;
+            }
+        }
+    }
+    return count;
+}
+
+void Map::SmoothMap() {
+    for (unsigned int y = 0; y < width; y++) {
+        for (unsigned int x = 0; x < height; x++) {
+            int neighbourCount = GetNeighbourCount(x, y);
+            if (neighbourCount > 3) {
+                map[y][x] = ' ';
+            } else {
+                map[y][x] = '#';
+            }
+        }
+        
+    }
+}
+
+void Map::FillOuterWalls() {
+    for (unsigned int y = 0; y < width; y++) {
+        for (unsigned int x = 0; x < height; x++) {
+            if (x == 0 || y == 0 || x == height - 1 || y == height - 1) {
+                map[y][x] = '#';
+            }
+        }
     }
 }

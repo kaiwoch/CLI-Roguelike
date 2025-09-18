@@ -5,6 +5,9 @@
 
 class Map {
 private:
+    int width;
+    int height;
+    int fillPercent;
     std::vector<Interectable*> objects;
     std::vector<std::vector<char>> map;
 public:
@@ -18,4 +21,7 @@ public:
     void DeleteObject(Interectable* object);
     Interectable* GetNearstInterectableObject(Coordinates position);
     void GenerateMap();
+    int GetNeighbourCount(unsigned int x, unsigned int y);
+    void SmoothMap();
+    void FillOuterWalls();
 };
