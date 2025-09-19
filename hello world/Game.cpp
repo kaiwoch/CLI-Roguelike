@@ -10,13 +10,17 @@ Game::Game() {
 }
 
 void Game::Run() {
-    Player player(map);
-    Mage mage(map);
-    Warrior warrior(map);
+    Player player;
+    Mage mage_001;
+    Warrior warrior_001;
     Chest chest_001;
     Chest chest_002;
+    
     map.SpawnObject(&chest_001);
     map.SpawnObject(&chest_002);
+    map.SpawnObject(&warrior_001);
+    map.SpawnObject(&mage_001);
+    map.SpawnObject(&player);
     
     while(isRunning) {
         std::cout << "Player pos:" << std::endl;
@@ -25,8 +29,8 @@ void Game::Run() {
         
         map.PrintMap();
         
-        mage.RandomeAI(map);
-        warrior.RandomeAI(map);
+        mage_001.RandomeAI(map);
+        warrior_001.RandomeAI(map);
         
         std::cin >> input;
         switch (input) {
@@ -55,6 +59,9 @@ void Game::Run() {
                     }
                     player.UseItem(choise);
                 }
+                break;
+            case 'x':
+                player.Attack(map);
                 break;
             default:
                 break;

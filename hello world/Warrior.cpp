@@ -1,15 +1,10 @@
 #include "Warrior.h"
 
-Warrior::Warrior(Map& map) : Entity() {
+Warrior::Warrior() : Entity() {
     symbol = 'W';
-    SpawnEntity(map);
 }
 
 //Если передавать по значению, то игрок будет заспавнен в копии карты
-void Warrior::SpawnEntity(Map& map){
-    Entity::SpawnEntity(map);
-    map.SetElement(pos, symbol);
-}
 
 void Warrior::MoveLeft(Map& map) {
     Entity::MoveLeft(map);

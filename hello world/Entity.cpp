@@ -6,19 +6,6 @@ Entity::Entity() {
     hp = 100;
 }
 
-void Entity::SpawnEntity(Map& map){
-    srand(time(NULL));
-    while(true){
-        Coordinates tmpl_position;
-        tmpl_position.SetX(rand() % map.Size().GetX());
-        tmpl_position.SetY(rand() % map.Size().GetY());
-        if(map.GetElement(tmpl_position) == ' ') {
-            pos = tmpl_position;
-            break;
-        }
-    }
-}
-
 void Entity::MoveLeft(Map& map) {
     Coordinates leftPos;
     leftPos.SetX(pos.GetX() - walkSpeed);
@@ -83,5 +70,13 @@ void Entity::PrintInventory() {
 
 int Entity::GetHP() {
     return hp;
+}
+
+char Entity::GetSymbol() {
+    return symbol;
+}
+
+void Entity::SetPosition(Coordinates position) {
+    pos = position;
 }
 

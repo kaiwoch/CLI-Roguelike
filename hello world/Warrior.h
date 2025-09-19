@@ -3,8 +3,8 @@
 
 class Warrior : public Entity {
 public:
-    Warrior(Map& map);
-    void SpawnEntity(Map& map) override;
+    Warrior();
+    
     void MoveLeft(Map& map) override;
     void MoveRight(Map& map) override;
     void MoveUp(Map& map) override;

@@ -3,8 +3,7 @@
 
 class Mage : public Entity {
 public:
-    Mage(Map& map);
-    void SpawnEntity(Map& map) override;
+    Mage();
     void MoveLeft(Map& map) override;
     void MoveRight(Map& map) override;
     void MoveUp(Map& map) override;

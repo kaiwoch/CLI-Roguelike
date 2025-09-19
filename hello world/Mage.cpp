@@ -1,15 +1,10 @@
 #include "Mage.h"
 
-Mage::Mage(Map& map) : Entity() {
+Mage::Mage() : Entity() {
     symbol = 'M';
-    SpawnEntity(map);
 }
 
 //Если передавать по значению, то игрок будет заспавнен в копии карты
-void Mage::SpawnEntity(Map& map){
-    Entity::SpawnEntity(map);
-    map.SetElement(pos, symbol);
-}
 
 void Mage::MoveLeft(Map& map) {
     Entity::MoveLeft(map);

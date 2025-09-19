@@ -1,17 +1,12 @@
 #include "Player.h"
 
-Player::Player(Map& map) : Entity() {
+Player::Player() : Entity() {
     max_hp = 100;
     hp = 50;
     symbol = 'P';
-    SpawnEntity(map);
 }
 
 //Если передавать по значению, то игрок будет заспавнен в копии карты
-void Player::SpawnEntity(Map& map){
-    Entity::SpawnEntity(map);
-    map.SetElement(pos, symbol);
-}
 
 void Player::MoveLeft(Map& map) {
     Entity::MoveLeft(map);
@@ -37,8 +32,14 @@ void Player::Use(Map& map) {
     auto object = map.GetNearstInterectableObject(pos);
     if (object != nullptr) {
         object->Open(inventory);
-        //object->SetIsOpened(true);
         map.DeleteObject(object);
+    }
+}
+
+void Player::Attack(Map& map) {
+    auto object = map.GetNearstEntityObject(pos);
+    if (object != nullptr) {
+        std::cout << object->GetSymbol() << std::endl;
     }
 }
 

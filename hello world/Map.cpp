@@ -1,4 +1,5 @@
 #include "Map.h"
+#include "Entity.h"
 #include <iostream>
 
 Map::Map() {
@@ -48,8 +49,23 @@ void Map::SpawnObject(Interectable* object) {
     }
 }
 
+void Map::SpawnObject(Entity* object) {
+    entities.push_back(object);
+    srand(time(NULL));
+    while(true){
+        Coordinates tmpl_position;
+        tmpl_position.SetX(rand() % Size().GetX());
+        tmpl_position.SetY(rand() % Size().GetY());
+        if(GetElement(tmpl_position) == ' ') {
+            object->SetPosition(tmpl_position);
+            SetElement(object->GetPosition(), object->GetSymbol());
+            break;
+        }
+    }
+}
+
 void Map::DeleteObject(Interectable* object) {
-    std::cout << objects.size() << std::endl;
+    //std::cout << objects.size() << std::endl;
     SetElement(object->GetPosition(), ' ');
     for (unsigned int i = 0; i < objects.size(); i++) {
         if (object == objects[i]) {
@@ -69,10 +85,21 @@ Interectable* Map::GetNearstInterectableObject(Coordinates position) {
     return nullptr;
 }
 
+Entity* Map::GetNearstEntityObject(Coordinates position) {
+    for (unsigned int i = 0; i < objects.size(); i++) {
+        if (-1 <= position.GetX() - entities[i]->GetPosition().GetX() and position.GetX() - entities[i]->GetPosition().GetX() <= 1) {
+            if (-1 <= position.GetY() - entities[i]->GetPosition().GetY() and position.GetY() - entities[i]->GetPosition().GetY() <= 1) {
+                return entities[i];
+            }
+        }
+    }
+    return nullptr;
+}
+
 void Map::GenerateMap() {
     srand(time(NULL));
-    width = 20;
-    height = 20;
+    width = 10;
+    height = 10;
     fillPercent = 30;
 
     std::vector<char> line;

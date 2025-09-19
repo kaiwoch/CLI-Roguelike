@@ -14,7 +14,6 @@ protected:
     Inventory inventory;
 public:
     Entity();
-    virtual void SpawnEntity(Map& map);
     virtual void MoveLeft(Map& map);
     virtual void MoveRight(Map& map);
     virtual void MoveUp(Map& map);
@@ -22,6 +21,8 @@ public:
     virtual void PrintInventory();
     Coordinates GetPosition();
     int GetHP();
+    char GetSymbol();
+    void SetPosition(Coordinates position);
     
     
     //костыль
