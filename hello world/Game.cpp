@@ -1,8 +1,6 @@
 #include "Game.h"
+#include "Level.h"
 #include "Player.h"
-#include "Mage.h"
-#include "Warrior.h"
-#include "Chest.h"
 #include <iostream>
 
 Game::Game() {
@@ -10,27 +8,18 @@ Game::Game() {
 }
 
 void Game::Run() {
+    Level level;
     Player player;
-    Mage mage_001;
-    Warrior warrior_001;
-    Chest chest_001;
-    Chest chest_002;
-    
-    map.SpawnObject(&chest_001);
-    map.SpawnObject(&chest_002);
-    map.SpawnObject(&warrior_001);
-    map.SpawnObject(&mage_001);
-    map.SpawnObject(&player);
+
+    map = level.NextLevel(&player);
     
     while(isRunning) {
+        system("clear");
         std::cout << "Player pos:" << std::endl;
         std::cout << "X: " << player.GetPosition().GetX() << " | " << "Y: " << player.GetPosition().GetY() << " | HP: " << player.GetHP() << std::endl;
         char input;
         
         map.PrintMap();
-        
-        mage_001.RandomeAI(map);
-        warrior_001.RandomeAI(map);
         
         std::cin >> input;
         switch (input) {
@@ -47,7 +36,12 @@ void Game::Run() {
                 player.MoveDown(map);
                 break;
             case 'e':
-                player.Use(map);
+                {
+                    bool isDoor = player.Use(map);
+                    if (isDoor) {
+                        map = level.NextLevel(&player);
+                    }
+                }
                 break;
             case 'i':
                 while(true) {
@@ -63,6 +57,8 @@ void Game::Run() {
             case 'x':
                 player.Attack(map);
                 break;
+            case 'l':
+                map.Debug();
             default:
                 break;
         }

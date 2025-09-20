@@ -32,6 +32,10 @@ void Map::PrintMap() {
         }
         std::cout << std::endl;
     }
+
+    for (unsigned int i = 0; i < entities.size(); i++) {
+        entities[i]->RandomAI(*this);
+    }
 }
 
 void Map::SpawnObject(Interectable* object) {
@@ -65,7 +69,7 @@ void Map::SpawnObject(Entity* object) {
 }
 
 void Map::DeleteObject(Interectable* object) {
-    //std::cout << objects.size() << std::endl;
+    std::cout << entities.size() << std::endl;
     SetElement(object->GetPosition(), ' ');
     for (unsigned int i = 0; i < objects.size(); i++) {
         if (object == objects[i]) {
@@ -86,10 +90,12 @@ Interectable* Map::GetNearstInterectableObject(Coordinates position) {
 }
 
 Entity* Map::GetNearstEntityObject(Coordinates position) {
-    for (unsigned int i = 0; i < objects.size(); i++) {
-        if (-1 <= position.GetX() - entities[i]->GetPosition().GetX() and position.GetX() - entities[i]->GetPosition().GetX() <= 1) {
-            if (-1 <= position.GetY() - entities[i]->GetPosition().GetY() and position.GetY() - entities[i]->GetPosition().GetY() <= 1) {
-                return entities[i];
+    for (unsigned int i = 0; i < entities.size(); i++) {
+        if (entities[i]->GetSymbol() != 'P') {
+            if (-1 <= position.GetX() - entities[i]->GetPosition().GetX() and position.GetX() - entities[i]->GetPosition().GetX() <= 1) {
+                if (-1 <= position.GetY() - entities[i]->GetPosition().GetY() and position.GetY() - entities[i]->GetPosition().GetY() <= 1) {
+                    return entities[i];
+                }
             }
         }
     }
@@ -98,9 +104,9 @@ Entity* Map::GetNearstEntityObject(Coordinates position) {
 
 void Map::GenerateMap() {
     srand(time(NULL));
-    width = 10;
-    height = 10;
-    fillPercent = 30;
+    width = 40;
+    height = 40;
+    fillPercent = 27;
 
     std::vector<char> line;
 
@@ -150,9 +156,9 @@ void Map::SmoothMap() {
         for (unsigned int x = 0; x < height; x++) {
             int neighbourCount = GetNeighbourCount(x, y);
             if (neighbourCount > 3) {
-                map[y][x] = ' ';
-            } else {
                 map[y][x] = '#';
+            } else {
+                map[y][x] = ' ';
             }
         }
         
@@ -166,5 +172,17 @@ void Map::FillOuterWalls() {
                 map[y][x] = '#';
             }
         }
+    }
+}
+
+void Map::Debug() {
+    std::cout << "Enities: " << std::endl;
+    for (unsigned int i = 0; i < entities.size(); i++) {
+        std::cout << entities[i]->GetSymbol() << ": position: X: " << entities[i]->GetPosition().GetX() << " | Y: " << entities[i]->GetPosition().GetY() << std::endl;
+    }
+
+    std::cout << "Interectable: " << std::endl;
+    for (unsigned int i = 0; i < objects.size(); i++) {
+        std::cout << objects[i]->GetSymbol() << ": position: X: " << objects[i]->GetPosition().GetX() << " | Y: " << objects[i]->GetPosition().GetY() << std::endl;
     }
 }

@@ -19,6 +19,7 @@ public:
     virtual void MoveUp(Map& map);
     virtual void MoveDown(Map& map);
     virtual void PrintInventory();
+    virtual void RandomAI(Map& map);
     Coordinates GetPosition();
     int GetHP();
     char GetSymbol();

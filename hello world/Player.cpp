@@ -28,12 +28,14 @@ void Player::MoveDown(Map& map) {
     map.SetElement(pos, symbol);
 }
 
-void Player::Use(Map& map) {
+bool Player::Use(Map& map) {
     auto object = map.GetNearstInterectableObject(pos);
     if (object != nullptr) {
         object->Open(inventory);
         map.DeleteObject(object);
+        return object->GetIsDoor();
     }
+    return false;
 }
 
 void Player::Attack(Map& map) {

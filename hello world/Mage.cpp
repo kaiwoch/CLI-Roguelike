@@ -26,7 +26,8 @@ void Mage::MoveDown(Map& map) {
     map.SetElement(pos, symbol);
 }
 
-void Mage::RandomeAI(Map& map) {
+void Mage::RandomAI(Map& map) {
+    Entity::RandomAI(map);
     srand(time(NULL));
     int direction = rand() % 4;
     

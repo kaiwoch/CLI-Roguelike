@@ -2,7 +2,7 @@
 
 
 Interectable::Interectable(){
-    
+    isDoor = false;
 }
 
 Coordinates Interectable::GetPosition() {
@@ -25,10 +25,6 @@ void Interectable::Open(Inventory &object_inventory) {
     
 }
 
-void Interectable::SetIsOpened(bool isOpened) {
-    this->isOpened = isOpened;
-}
-
-bool Interectable::GetIsOpened() {
-    return isOpened;
+bool Interectable::GetIsDoor() {
+    return isDoor;
 }

@@ -26,7 +26,8 @@ void Warrior::MoveDown(Map& map) {
     map.SetElement(pos, symbol);
 }
 
-void Warrior::RandomeAI(Map& map) {
+void Warrior::RandomAI(Map& map) {
+    Entity::RandomAI(map);
     srand(time(NULL));
     int direction = rand() % 4;
     

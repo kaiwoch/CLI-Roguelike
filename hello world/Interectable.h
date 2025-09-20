@@ -8,7 +8,7 @@ class Interectable {
 protected:
     Coordinates pos;
     char symbol;
-    bool isOpened;
+    bool isDoor;
 public:
     Interectable();
     virtual void Open(Inventory& object_inventory);
@@ -17,7 +17,7 @@ public:
     char GetSymbol();
     void SetPosition(Coordinates position);
     void SetIsOpened(bool isOpened);
-    bool GetIsOpened();
+    bool GetIsDoor();
     
     virtual ~Interectable() = default;
 };

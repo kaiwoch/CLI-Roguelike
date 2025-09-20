@@ -80,3 +80,7 @@ void Entity::SetPosition(Coordinates position) {
     pos = position;
 }
 
+void Entity::RandomAI(Map& map) {
+
+}
+

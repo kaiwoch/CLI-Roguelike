@@ -30,4 +30,5 @@ public:
     int GetNeighbourCount(unsigned int x, unsigned int y);
     void SmoothMap();
     void FillOuterWalls();
+    void Debug();
 };
