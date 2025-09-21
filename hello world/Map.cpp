@@ -35,6 +35,7 @@ void Map::PrintMap() {
 
     for (unsigned int i = 0; i < entities.size(); i++) {
         entities[i]->RandomAI(*this);
+        //PrintLine(entities[i]);
     }
 }
 
@@ -68,12 +69,30 @@ void Map::SpawnObject(Entity* object) {
     }
 }
 
+void Map::SpawnObject(Entity* object, Coordinates position) {
+    entities.push_back(object);
+    if(GetElement(position) == ' ') {
+        object->SetPosition(position);
+        SetElement(object->GetPosition(), object->GetSymbol());
+    }
+}
+
 void Map::DeleteObject(Interectable* object) {
-    std::cout << entities.size() << std::endl;
+    //std::cout << entities.size() << std::endl;
     SetElement(object->GetPosition(), ' ');
     for (unsigned int i = 0; i < objects.size(); i++) {
         if (object == objects[i]) {
             objects.erase(objects.cbegin() + i);
+        }
+    }
+}
+
+void Map::DeleteObject(Entity* object) {
+    //std::cout << entities.size() << std::endl;
+    SetElement(object->GetPosition(), ' ');
+    for (unsigned int i = 0; i < entities.size(); i++) {
+        if (object == entities[i]) {
+            entities.erase(entities.cbegin() + i);
         }
     }
 }
@@ -97,6 +116,15 @@ Entity* Map::GetNearstEntityObject(Coordinates position) {
                     return entities[i];
                 }
             }
+        }
+    }
+    return nullptr;
+}
+
+Entity* Map::GetObject(Coordinates position) {
+    for (unsigned int i = 0; i < entities.size(); i++) {
+        if (position.GetX() == entities[i]->GetPosition().GetX() && position.GetY() == entities[i]->GetPosition().GetY()) {
+            return entities[i];
         }
     }
     return nullptr;
@@ -175,10 +203,40 @@ void Map::FillOuterWalls() {
     }
 }
 
+Coordinates Map::GetPlayerPosition() {
+    for (unsigned int i = 0; i < entities.size(); i++) {
+        if (entities[i]->GetSymbol() == 'P') {
+            return entities[i]->GetPosition();
+        }
+    }
+    return Coordinates();
+}
+
+float Map::GetDistanceToPlayer(Entity* entity) {
+    Coordinates player_pos = GetPlayerPosition();
+    Coordinates entity_pos = entity->GetPosition();
+    
+    //Длина вектора
+    float dist = std::sqrt(std::pow(entity_pos.GetX() - player_pos.GetX(), 2) + std::pow(entity_pos.GetY() - player_pos.GetY(), 2));
+    return dist;
+}
+
+float Map::GetDirectionToPlayer(Entity* entity) {
+    Coordinates player_pos = GetPlayerPosition();
+    Coordinates entity_pos = entity->GetPosition();
+    
+    float alpha = std::atan2(-(player_pos.GetY() - entity_pos.GetY()), player_pos.GetX() - entity_pos.GetX());
+    
+    //float angles = (alpha * (180.f / 3.14f));
+    
+    
+    return alpha;
+}
+
 void Map::Debug() {
     std::cout << "Enities: " << std::endl;
     for (unsigned int i = 0; i < entities.size(); i++) {
-        std::cout << entities[i]->GetSymbol() << ": position: X: " << entities[i]->GetPosition().GetX() << " | Y: " << entities[i]->GetPosition().GetY() << std::endl;
+        std::cout << entities[i]->GetSymbol() << ": position: X: " << entities[i]->GetPosition().GetX() << " | Y: " << entities[i]->GetPosition().GetY() << " Dist to player: " << GetDistanceToPlayer(entities[i]) << " Dir to player: " << GetDirectionToPlayer(entities[i]) << std::endl;
     }
 
     std::cout << "Interectable: " << std::endl;
@@ -186,3 +244,20 @@ void Map::Debug() {
         std::cout << objects[i]->GetSymbol() << ": position: X: " << objects[i]->GetPosition().GetX() << " | Y: " << objects[i]->GetPosition().GetY() << std::endl;
     }
 }
+
+void Map::PrintLine(Entity* entity) {
+    float dir = GetDirectionToPlayer(entity);
+    int dist = GetDistanceToPlayer(entity) - 1;
+    for (int i = 1; i <= dist; i++){
+        int x = std::round(entity->GetPosition().GetX() + i * std::cos(dir));
+        int y = std::round(entity->GetPosition().GetY() - i * std::sin(dir));
+        
+        Coordinates line_pos;
+        line_pos.SetX(x);
+        line_pos.SetY(y);
+            
+        SetElement(line_pos, '.');
+    }
+        
+}
+

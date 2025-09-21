@@ -10,6 +10,7 @@ Map Level::NextLevel(Player* player) {
     Door* door = new Door;
     map.SpawnObject(door);
 	map.SpawnObject(player);
+    
     int count_enemies = 1 + rand() % 5;
     for (int i = 0; i < count_enemies; i++) {
     	int enemy_type = rand() % 2;
@@ -23,6 +24,7 @@ Map Level::NextLevel(Player* player) {
     	case 1: {
     		Mage* mage = new Mage;
     		map.SpawnObject(mage);
+            mage->SpawnFireBall(map);
     		}
     	break;
     	}

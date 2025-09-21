@@ -47,3 +47,16 @@ void Mage::RandomAI(Map& map) {
     }
 }
 
+void Mage::SpawnFireBall(Map& map) {
+    float dir = map.GetDirectionToPlayer(this);
+    
+    int x = std::round(GetPosition().GetX() + walkSpeed * std::cos(dir));
+    int y = std::round(GetPosition().GetY() - walkSpeed * std::sin(dir));
+    
+    Coordinates next_position;
+    next_position.SetX(x);
+    next_position.SetY(y);
+    
+    FireBall* fireball = new FireBall(map);
+    map.SpawnObject(fireball, next_position);
+}

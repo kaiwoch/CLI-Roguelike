@@ -15,4 +15,5 @@ public:
     void Attack(Map& map);
     void UseItem(unsigned int);
     void Heal(int healAmount);
+    void TakeDamage(int damage) override;
 };

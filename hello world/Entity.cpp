@@ -50,6 +50,14 @@ void Entity::MoveDown(Map& map) {
     }
 }
 
+void Entity::TakeDamage(int damage) {
+    if (hp - damage < 0) {
+        hp = 0;
+    } else {
+        hp -= damage;
+    }
+}
+
 /*
 bool Entity::EntityIsNear(Entity object) {
     if (-1 <= pos.GetX() - object.pos.GetX() and pos.GetX() - object.pos.GetX() <= 1) {
@@ -59,6 +67,10 @@ bool Entity::EntityIsNear(Entity object) {
     }
     return false;
 } */
+
+void Entity::Attack(Entity* entity, int damage) {
+    entity->TakeDamage(damage);
+}
 
 Coordinates Entity::GetPosition() {
     return pos;

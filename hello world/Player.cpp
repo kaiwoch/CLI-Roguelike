@@ -1,8 +1,6 @@
 #include "Player.h"
 
 Player::Player() : Entity() {
-    max_hp = 100;
-    hp = 50;
     symbol = 'P';
 }
 
@@ -59,5 +57,9 @@ void Player::UseItem(unsigned int index) {
         item->UseItem(*this);
         inventory.RemoveItem(item);
     }
+}
+
+void Player::TakeDamage(int damage) {
+    Entity::TakeDamage(damage);
 }
 

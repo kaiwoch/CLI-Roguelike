@@ -4,6 +4,7 @@
 class Game {
 private:
     bool isRunning;
+    bool isDebug;
     Map map;
 public:
     Game();

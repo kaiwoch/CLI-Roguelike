@@ -5,9 +5,12 @@
 
 Game::Game() {
     isRunning = true;
+    isDebug = false;
 }
 
 void Game::Run() {
+    isDebug = false;
+    
     Level level;
     Player player;
 
@@ -15,6 +18,9 @@ void Game::Run() {
     
     while(isRunning) {
         system("clear");
+        if (isDebug) {
+            map.Debug();
+        }
         std::cout << "Player pos:" << std::endl;
         std::cout << "X: " << player.GetPosition().GetX() << " | " << "Y: " << player.GetPosition().GetY() << " | HP: " << player.GetHP() << std::endl;
         char input;
@@ -57,8 +63,6 @@ void Game::Run() {
             case 'x':
                 player.Attack(map);
                 break;
-            case 'l':
-                map.Debug();
             default:
                 break;
         }
