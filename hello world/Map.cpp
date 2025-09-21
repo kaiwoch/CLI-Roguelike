@@ -2,6 +2,7 @@
 #include "Entity.h"
 #include <iostream>
 
+//Конструктор
 Map::Map() {
     GenerateMap();
     for (int i = 0; i < 6; i++) {
@@ -10,6 +11,7 @@ Map::Map() {
     }
 }
 
+//Получить размер карты
 Coordinates Map::Size() {
     Coordinates SizeCoord;
     SizeCoord.SetX(map[0].size());
@@ -17,14 +19,17 @@ Coordinates Map::Size() {
     return SizeCoord;
 }
 
+//Установить символьное представление объекта на карте
 void Map::SetElement(Coordinates coordinates, char object) {
     map[coordinates.GetY()][coordinates.GetX()] = object;
 }
 
+//Получить символьное представление объекта на карте
 char Map::GetElement(Coordinates coordinates) {
     return map[coordinates.GetY()][coordinates.GetX()];
 }
 
+//Отрисовка карты и запуск методов у объектов, находящихся на карте каждый кадр.
 void Map::PrintMap() {
     for (unsigned int y = 0; y < Size().GetY(); y++) {
         for (unsigned int x = 0; x < Size().GetX(); x++) {
@@ -39,6 +44,7 @@ void Map::PrintMap() {
     }
 }
 
+//Рандомный спавн Interectable
 void Map::SpawnObject(Interectable* object) {
     objects.push_back(object);
     srand(time(NULL));
@@ -54,6 +60,7 @@ void Map::SpawnObject(Interectable* object) {
     }
 }
 
+//Перегрузка рандомный спавн Entity
 void Map::SpawnObject(Entity* object) {
     entities.push_back(object);
     srand(time(NULL));
@@ -69,6 +76,7 @@ void Map::SpawnObject(Entity* object) {
     }
 }
 
+//Перегрузка, спавн по координатам Entity
 void Map::SpawnObject(Entity* object, Coordinates position) {
     entities.push_back(object);
     if(GetElement(position) == ' ') {
@@ -77,6 +85,7 @@ void Map::SpawnObject(Entity* object, Coordinates position) {
     }
 }
 
+//Удалить объект с карты Interectable
 void Map::DeleteObject(Interectable* object) {
     //std::cout << entities.size() << std::endl;
     SetElement(object->GetPosition(), ' ');
@@ -87,6 +96,7 @@ void Map::DeleteObject(Interectable* object) {
     }
 }
 
+//Удалить объект с карты Entity
 void Map::DeleteObject(Entity* object) {
     //std::cout << entities.size() << std::endl;
     SetElement(object->GetPosition(), ' ');
@@ -97,6 +107,7 @@ void Map::DeleteObject(Entity* object) {
     }
 }
 
+//Получить ближайший объект Interectable
 Interectable* Map::GetNearstInterectableObject(Coordinates position) {
     for (unsigned int i = 0; i < objects.size(); i++) {
         if (-1 <= position.GetX() - objects[i]->GetPosition().GetX() and position.GetX() - objects[i]->GetPosition().GetX() <= 1) {
@@ -108,6 +119,7 @@ Interectable* Map::GetNearstInterectableObject(Coordinates position) {
     return nullptr;
 }
 
+//Получить ближайший объект Entity
 Entity* Map::GetNearstEntityObject(Coordinates position) {
     for (unsigned int i = 0; i < entities.size(); i++) {
         if (entities[i]->GetSymbol() != 'P') {
@@ -121,6 +133,7 @@ Entity* Map::GetNearstEntityObject(Coordinates position) {
     return nullptr;
 }
 
+//Получить объект Entity по координатам
 Entity* Map::GetObject(Coordinates position) {
     for (unsigned int i = 0; i < entities.size(); i++) {
         if (position.GetX() == entities[i]->GetPosition().GetX() && position.GetY() == entities[i]->GetPosition().GetY()) {
@@ -130,6 +143,7 @@ Entity* Map::GetObject(Coordinates position) {
     return nullptr;
 }
 
+//Алгоритм процедурной генерации "Клеточные автоматы"
 void Map::GenerateMap() {
     srand(time(NULL));
     width = 40;
@@ -150,6 +164,7 @@ void Map::GenerateMap() {
         line = {};
     }
 }
+
 
 int Map::GetNeighbourCount(unsigned int x, unsigned int y) {
     int count = 0;
@@ -203,6 +218,7 @@ void Map::FillOuterWalls() {
     }
 }
 
+//Получить позицию игрока на карте
 Coordinates Map::GetPlayerPosition() {
     for (unsigned int i = 0; i < entities.size(); i++) {
         if (entities[i]->GetSymbol() == 'P') {
@@ -212,6 +228,7 @@ Coordinates Map::GetPlayerPosition() {
     return Coordinates();
 }
 
+//Длина вектора от объекта до игрока
 float Map::GetDistanceToPlayer(Entity* entity) {
     Coordinates player_pos = GetPlayerPosition();
     Coordinates entity_pos = entity->GetPosition();
@@ -221,6 +238,7 @@ float Map::GetDistanceToPlayer(Entity* entity) {
     return dist;
 }
 
+//Направление от объекта к игроку
 float Map::GetDirectionToPlayer(Entity* entity) {
     Coordinates player_pos = GetPlayerPosition();
     Coordinates entity_pos = entity->GetPosition();
@@ -233,6 +251,7 @@ float Map::GetDirectionToPlayer(Entity* entity) {
     return alpha;
 }
 
+// Вывод основной информации в консоль
 void Map::Debug() {
     std::cout << "Enities: " << std::endl;
     for (unsigned int i = 0; i < entities.size(); i++) {
@@ -245,6 +264,7 @@ void Map::Debug() {
     }
 }
 
+//Отрисовка луча от объекта к игроку
 void Map::PrintLine(Entity* entity) {
     float dir = GetDirectionToPlayer(entity);
     int dist = GetDistanceToPlayer(entity) - 1;

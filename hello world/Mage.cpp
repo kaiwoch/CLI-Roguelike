@@ -56,7 +56,8 @@ void Mage::SpawnFireBall(Map& map) {
     Coordinates next_position;
     next_position.SetX(x);
     next_position.SetY(y);
-    
-    FireBall* fireball = new FireBall(map);
-    map.SpawnObject(fireball, next_position);
+    if (map.GetElement(next_position) == ' ') {
+        FireBall* fireball = new FireBall(map);
+        map.SpawnObject(fireball, next_position);
+    }
 }
