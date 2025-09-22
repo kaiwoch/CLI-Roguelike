@@ -261,7 +261,7 @@ float Map::GetDirectionToPlayer(Entity* entity) {
 void Map::Debug() {
     std::cout << "Enities: " << std::endl;
     for (unsigned int i = 0; i < entities.size(); i++) {
-        std::cout << entities[i]->GetSymbol() << ": position: X: " << entities[i]->GetPosition().GetX() << " | Y: " << entities[i]->GetPosition().GetY() << " Dist to player: " << GetDistanceToPlayer(entities[i]) << " Dir to player: " << GetDirectionToPlayer(entities[i]) << " HP: " << entities[i]->GetHP() << std::endl;
+        std::cout << entities[i]->GetSymbol() << ": position: X: " << entities[i]->GetPosition().GetX() << " | Y: " << entities[i]->GetPosition().GetY() << " Dist to player: " << GetDistanceToPlayer(entities[i]) << " Dir to player: " << GetDirectionToPlayer(entities[i]) << " HP: " << entities[i]->GetHP() << "/" << entities[i]->GetMaxHP() << std::endl;
     }
 
     std::cout << "Interectable: " << std::endl;

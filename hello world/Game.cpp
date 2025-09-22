@@ -23,7 +23,7 @@ void Game::Run() {
         }
 
         std::cout << "Player pos:" << std::endl;
-        std::cout << "X: " << player.GetPosition().GetX() << " | " << "Y: " << player.GetPosition().GetY() << " | HP: " << player.GetHP() << std::endl;
+        std::cout << "X: " << player.GetPosition().GetX() << " | " << "Y: " << player.GetPosition().GetY() << " | HP: " << player.GetHP() << "/" << player.GetMaxHP() << std::endl;
         std::cout << "# # # # # # # # # # # # # # # # # S T A G E : " << level.GetStageNumber() <<" # # # # # # # # # # # # # # # #" << std::endl;
         char input;
         

@@ -27,6 +27,7 @@ public:
     virtual void TakeDamage(int damage);
     Coordinates GetPosition();
     int GetHP();
+    int GetMaxHP();
     std::string GetSymbol();
     void SetPosition(Coordinates position);
     

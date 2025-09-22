@@ -101,3 +101,7 @@ void Entity::Attack(Map& map) {
 
 }
 
+int Entity::GetMaxHP() {
+    return max_hp;
+}
+
