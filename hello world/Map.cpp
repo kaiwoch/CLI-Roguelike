@@ -5,7 +5,7 @@
 //Конструктор
 Map::Map() {
     GenerateMap();
-    for (int i = 0; i < 6; i++) {
+    for (int i = 0; i < 4; i++) {
         SmoothMap();
         FillOuterWalls();
     }
@@ -20,12 +20,12 @@ Coordinates Map::Size() {
 }
 
 //Установить символьное представление объекта на карте
-void Map::SetElement(Coordinates coordinates, char object) {
+void Map::SetElement(Coordinates coordinates, std::string object) {
     map[coordinates.GetY()][coordinates.GetX()] = object;
 }
 
 //Получить символьное представление объекта на карте
-char Map::GetElement(Coordinates coordinates) {
+std::string Map::GetElement(Coordinates coordinates) {
     return map[coordinates.GetY()][coordinates.GetX()];
 }
 
@@ -40,8 +40,14 @@ void Map::PrintMap() {
 
     for (unsigned int i = 0; i < entities.size(); i++) {
         entities[i]->RandomAI(*this);
-        //PrintLine(entities[i]);
     }
+
+
+    for (unsigned int i = 0; i < entities.size(); i++) {
+        if (entities[i]->GetSymbol() != "P") 
+            entities[i]->Attack(*this);
+    }
+
 }
 
 //Рандомный спавн Interectable
@@ -52,7 +58,7 @@ void Map::SpawnObject(Interectable* object) {
         Coordinates tmpl_position;
         tmpl_position.SetX(rand() % Size().GetX());
         tmpl_position.SetY(rand() % Size().GetY());
-        if(GetElement(tmpl_position) == ' ') {
+        if(GetElement(tmpl_position) == " ") {
             object->SetPosition(tmpl_position);
             SetElement(object->GetPosition(), object->GetSymbol());
             break;
@@ -68,7 +74,7 @@ void Map::SpawnObject(Entity* object) {
         Coordinates tmpl_position;
         tmpl_position.SetX(rand() % Size().GetX());
         tmpl_position.SetY(rand() % Size().GetY());
-        if(GetElement(tmpl_position) == ' ') {
+        if(GetElement(tmpl_position) == " ") {
             object->SetPosition(tmpl_position);
             SetElement(object->GetPosition(), object->GetSymbol());
             break;
@@ -79,7 +85,7 @@ void Map::SpawnObject(Entity* object) {
 //Перегрузка, спавн по координатам Entity
 void Map::SpawnObject(Entity* object, Coordinates position) {
     entities.push_back(object);
-    if(GetElement(position) == ' ') {
+    if(GetElement(position) == " ") {
         object->SetPosition(position);
         SetElement(object->GetPosition(), object->GetSymbol());
     }
@@ -88,7 +94,7 @@ void Map::SpawnObject(Entity* object, Coordinates position) {
 //Удалить объект с карты Interectable
 void Map::DeleteObject(Interectable* object) {
     //std::cout << entities.size() << std::endl;
-    SetElement(object->GetPosition(), ' ');
+    SetElement(object->GetPosition(), " ");
     for (unsigned int i = 0; i < objects.size(); i++) {
         if (object == objects[i]) {
             objects.erase(objects.cbegin() + i);
@@ -99,7 +105,7 @@ void Map::DeleteObject(Interectable* object) {
 //Удалить объект с карты Entity
 void Map::DeleteObject(Entity* object) {
     //std::cout << entities.size() << std::endl;
-    SetElement(object->GetPosition(), ' ');
+    SetElement(object->GetPosition(), " ");
     for (unsigned int i = 0; i < entities.size(); i++) {
         if (object == entities[i]) {
             entities.erase(entities.cbegin() + i);
@@ -121,12 +127,12 @@ Interectable* Map::GetNearstInterectableObject(Coordinates position) {
 
 //Получить ближайший объект Entity
 Entity* Map::GetNearstEntityObject(Coordinates position) {
+    
     for (unsigned int i = 0; i < entities.size(); i++) {
-        if (entities[i]->GetSymbol() != 'P') {
-            if (-1 <= position.GetX() - entities[i]->GetPosition().GetX() and position.GetX() - entities[i]->GetPosition().GetX() <= 1) {
-                if (-1 <= position.GetY() - entities[i]->GetPosition().GetY() and position.GetY() - entities[i]->GetPosition().GetY() <= 1) {
-                    return entities[i];
-                }
+        if (entities[i]->GetSymbol() != "P") {
+            float dist = GetDistanceToPlayer(entities[i]);
+            if (dist < 2.f) {
+                return entities[i];
             }
         }
     }
@@ -150,14 +156,14 @@ void Map::GenerateMap() {
     height = 40;
     fillPercent = 27;
 
-    std::vector<char> line;
+    std::vector<std::string> line;
 
     for (unsigned int y = 0; y < width; y++) {
         for (unsigned int x = 0; x < height; x++) {
             if (rand() % 100 < fillPercent) {
-                line.push_back('#');
+                line.push_back("#");
             } else {
-                line.push_back(' ');
+                line.push_back(" ");
             }
         }
         map.push_back(line);
@@ -186,7 +192,7 @@ int Map::GetNeighbourCount(unsigned int x, unsigned int y) {
             if (dx == height) {
                 break;
             }
-            if (map[dy][dx] == '#') {
+            if (map[dy][dx] == "#") {
                 count++;
             }
         }
@@ -199,9 +205,9 @@ void Map::SmoothMap() {
         for (unsigned int x = 0; x < height; x++) {
             int neighbourCount = GetNeighbourCount(x, y);
             if (neighbourCount > 3) {
-                map[y][x] = '#';
+                map[y][x] = "#";
             } else {
-                map[y][x] = ' ';
+                map[y][x] = " ";
             }
         }
         
@@ -212,7 +218,7 @@ void Map::FillOuterWalls() {
     for (unsigned int y = 0; y < width; y++) {
         for (unsigned int x = 0; x < height; x++) {
             if (x == 0 || y == 0 || x == height - 1 || y == height - 1) {
-                map[y][x] = '#';
+                map[y][x] = "#";
             }
         }
     }
@@ -221,7 +227,7 @@ void Map::FillOuterWalls() {
 //Получить позицию игрока на карте
 Coordinates Map::GetPlayerPosition() {
     for (unsigned int i = 0; i < entities.size(); i++) {
-        if (entities[i]->GetSymbol() == 'P') {
+        if (entities[i]->GetSymbol() == "P") {
             return entities[i]->GetPosition();
         }
     }
@@ -255,7 +261,7 @@ float Map::GetDirectionToPlayer(Entity* entity) {
 void Map::Debug() {
     std::cout << "Enities: " << std::endl;
     for (unsigned int i = 0; i < entities.size(); i++) {
-        std::cout << entities[i]->GetSymbol() << ": position: X: " << entities[i]->GetPosition().GetX() << " | Y: " << entities[i]->GetPosition().GetY() << " Dist to player: " << GetDistanceToPlayer(entities[i]) << " Dir to player: " << GetDirectionToPlayer(entities[i]) << std::endl;
+        std::cout << entities[i]->GetSymbol() << ": position: X: " << entities[i]->GetPosition().GetX() << " | Y: " << entities[i]->GetPosition().GetY() << " Dist to player: " << GetDistanceToPlayer(entities[i]) << " Dir to player: " << GetDirectionToPlayer(entities[i]) << " HP: " << entities[i]->GetHP() << std::endl;
     }
 
     std::cout << "Interectable: " << std::endl;
@@ -276,7 +282,7 @@ void Map::PrintLine(Entity* entity) {
         line_pos.SetX(x);
         line_pos.SetY(y);
             
-        SetElement(line_pos, '.');
+        SetElement(line_pos, ".");
     }
         
 }

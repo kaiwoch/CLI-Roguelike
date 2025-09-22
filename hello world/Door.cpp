@@ -1,7 +1,7 @@
 #include "Door.h"
 
 Door::Door() {
-    symbol = 'D';
+    symbol = "D";
 }
 
 void Door::Open(Inventory& inventory) {

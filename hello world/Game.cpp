@@ -9,7 +9,7 @@ Game::Game() {
 }
 
 void Game::Run() {
-    isDebug = false;
+    isDebug = true;
     
     Level level;
     Player player;
@@ -17,12 +17,14 @@ void Game::Run() {
     map = level.NextLevel(&player);
     
     while(isRunning) {
-        system("clear");
+        system("cls");
         if (isDebug) {
             map.Debug();
         }
+
         std::cout << "Player pos:" << std::endl;
         std::cout << "X: " << player.GetPosition().GetX() << " | " << "Y: " << player.GetPosition().GetY() << " | HP: " << player.GetHP() << std::endl;
+        std::cout << "# # # # # # # # # # # # # # # # # S T A G E : " << level.GetStageNumber() <<" # # # # # # # # # # # # # # # #" << std::endl;
         char input;
         
         map.PrintMap();

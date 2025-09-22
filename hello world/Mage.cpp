@@ -1,7 +1,11 @@
 #include "Mage.h"
 
 Mage::Mage() : Entity() {
-    symbol = 'M';
+    max_hp = 50;
+    hp = max_hp;
+
+    timer = 10;
+    symbol = "M";
 }
 
 //Если передавать по значению, то игрок будет заспавнен в копии карты
@@ -47,17 +51,27 @@ void Mage::RandomAI(Map& map) {
     }
 }
 
-void Mage::SpawnFireBall(Map& map) {
-    float dir = map.GetDirectionToPlayer(this);
-    
-    int x = std::round(GetPosition().GetX() + walkSpeed * std::cos(dir));
-    int y = std::round(GetPosition().GetY() - walkSpeed * std::sin(dir));
-    
-    Coordinates next_position;
-    next_position.SetX(x);
-    next_position.SetY(y);
-    if (map.GetElement(next_position) == ' ') {
-        FireBall* fireball = new FireBall(map);
-        map.SpawnObject(fireball, next_position);
+void Mage::Attack(Map& map) {
+    Entity::Attack(map);
+    float dist = map.GetDistanceToPlayer(this);
+
+    if (dist < 7) {
+        if (timer >= 10) {
+            timer = 0;
+            
+            float dir = map.GetDirectionToPlayer(this);
+        
+            int x = std::round(GetPosition().GetX() + walkSpeed * std::cos(dir));
+            int y = std::round(GetPosition().GetY() - walkSpeed * std::sin(dir));
+        
+            Coordinates next_position;
+            next_position.SetX(x);
+            next_position.SetY(y);
+            if (map.GetElement(next_position) == " ") {
+                FireBall* fireball = new FireBall(map);
+                map.SpawnObject(fireball, next_position);
+            }
+        }
     }
+    timer++;
 }

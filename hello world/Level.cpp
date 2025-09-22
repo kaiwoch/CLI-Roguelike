@@ -1,7 +1,7 @@
 #include "Level.h"
 
 Level::Level() {
-	num_stage = 1;
+	num_stage = 0;
 }
 
 Map Level::NextLevel(Player* player) {
@@ -24,7 +24,6 @@ Map Level::NextLevel(Player* player) {
     	case 1: {
     		Mage* mage = new Mage;
     		map.SpawnObject(mage);
-            mage->SpawnFireBall(map);
     		}
     	break;
     	}

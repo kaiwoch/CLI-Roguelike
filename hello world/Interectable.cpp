@@ -13,7 +13,7 @@ void Interectable::SetPosition(Coordinates position) {
     pos = position;
 }
 
-char Interectable::GetSymbol() {
+std::string Interectable::GetSymbol() {
     return symbol;
 }
 

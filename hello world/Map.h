@@ -1,4 +1,5 @@
 #include <vector>
+#include <string>
 #include "Coordinates.h"
 #include "Interectable.h"
 #include "math.h"
@@ -14,14 +15,14 @@ private:
     int fillPercent;
     std::vector<Interectable*> objects;
     std::vector<Entity*> entities;
-    std::vector<std::vector<char>> map;
+    std::vector<std::vector<std::string>> map;
 public:
     Map();
     
     void PrintMap();
     Coordinates Size();
-    char GetElement(Coordinates coordinates);
-    void SetElement(Coordinates coordinates, char object);
+    std::string GetElement(Coordinates coordinates);
+    void SetElement(Coordinates coordinates, std::string object);
     void SpawnObject(Interectable* object);
     void SpawnObject(Entity* object);
     void SpawnObject(Entity* object, Coordinates position);

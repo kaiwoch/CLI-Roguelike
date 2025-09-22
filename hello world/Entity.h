@@ -1,6 +1,7 @@
 #include "Map.h"
 #include "Coordinates.h"
 #include "Inventory.h"
+#include <string>
 #include <time.h>
 #pragma once
 
@@ -11,7 +12,7 @@ protected:
     int damage;
     Coordinates pos;
     int walkSpeed;
-    char symbol;
+    std::string symbol;
     Inventory inventory;
 public:
     Entity();
@@ -21,11 +22,12 @@ public:
     virtual void MoveDown(Map& map);
     virtual void PrintInventory();
     virtual void RandomAI(Map& map);
-    virtual void Attack(Entity* entity, int damage);
+    virtual void Damage(Entity* entity, int damage);
+    virtual void Attack(Map& map);
+    virtual void TakeDamage(int damage);
     Coordinates GetPosition();
     int GetHP();
-    virtual void TakeDamage(int damage);
-    char GetSymbol();
+    std::string GetSymbol();
     void SetPosition(Coordinates position);
     
     

@@ -3,6 +3,8 @@
 #pragma once
 
 class Mage : public Entity {
+private:
+    int timer;
 public:
     Mage();
     void MoveLeft(Map& map) override;
@@ -10,7 +12,7 @@ public:
     void MoveUp(Map& map) override;
     void MoveDown(Map& map) override;
     void RandomAI(Map& map) override;
-    void SpawnFireBall(Map& map);
+    void Attack(Map& map) override;
 };
 
 

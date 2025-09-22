@@ -1,7 +1,8 @@
 #include "Warrior.h"
 
 Warrior::Warrior() : Entity() {
-    symbol = 'W';
+    symbol = "W";
+    max_hp = 100;
 }
 
 //Если передавать по значению, то игрок будет заспавнен в копии карты

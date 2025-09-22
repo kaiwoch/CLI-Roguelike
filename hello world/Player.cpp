@@ -1,7 +1,8 @@
 #include "Player.h"
 
 Player::Player() : Entity() {
-    symbol = 'P';
+    symbol = "P";
+    damage = 20;
 }
 
 //Если передавать по значению, то игрок будет заспавнен в копии карты
@@ -39,7 +40,7 @@ bool Player::Use(Map& map) {
 void Player::Attack(Map& map) {
     auto object = map.GetNearstEntityObject(pos);
     if (object != nullptr) {
-        std::cout << object->GetSymbol() << std::endl;
+        object->TakeDamage(damage);
     }
 }
 
@@ -52,14 +53,26 @@ void Player::Heal(int healAmount) {
 }
 
 void Player::UseItem(unsigned int index) {
-    auto item = inventory.ChoiseItem(index);
-    if (item != nullptr) {
-        item->UseItem(*this);
-        inventory.RemoveItem(item);
+    if (index <= inventory.GetInventory().size()) {
+        auto item = inventory.ChoiseItem(index);
+        if (item != nullptr) {
+            item->UseItem(*this);
+            inventory.RemoveItem(item);
+        }
+    } else {
+        std::cout << "Item not found." << std::endl;
     }
 }
 
 void Player::TakeDamage(int damage) {
     Entity::TakeDamage(damage);
+}
+
+void Player::SetMaxHP(int amount) {
+    max_hp = amount;
+}
+
+void Player::SetDamage(int amount) {
+    damage = amount;
 }
 

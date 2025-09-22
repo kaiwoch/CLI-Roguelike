@@ -1,7 +1,9 @@
 #include "Interectable.h"
 #include "Inventory.h"
 #include "Item.h"
-#include "ItemRing.h"
+#include "ItemMaxHP.h"
+#include "ItemHeal.h"
+#include "ItemDamage.h"
 #pragma once
 
 class Chest : public Interectable {

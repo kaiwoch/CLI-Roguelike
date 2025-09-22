@@ -2,18 +2,18 @@
 
 FireBall::FireBall(Map& map) : Entity() {
     damage = 10;
-    symbol = '*';
-    next_symbol = ' ';
+    symbol = "*";
+    next_symbol = " ";
 }
 
 void FireBall::RandomAI(Map& map) {
     Entity::RandomAI(map);
     
-    if (next_symbol != ' ') {
+    if (next_symbol != " ") {
         if (next_object != nullptr) {
-            std::cout << "BOOM!" << std::endl;
+            //std::cout << "BOOM!" << std::endl;
             std::cout << next_object->GetSymbol() << std::endl;
-            Attack(next_object, damage);
+            Damage(next_object, damage);
         }
         map.DeleteObject(this);
         return;
@@ -29,14 +29,16 @@ void FireBall::RandomAI(Map& map) {
     next_position.SetX(x);
     next_position.SetY(y);
     
+
+    //map.SetElement(pos, next_symbol);
     next_object = map.GetObject(next_position);
     next_symbol = map.GetElement(next_position);
-    if (next_symbol == ' ') {
+    if (next_symbol == " ") {
         map.SetElement(pos, next_symbol);
         pos = next_position;
         map.SetElement(pos, symbol);
     } else {
-        map.SetElement(pos, ' ');
+        map.SetElement(pos, " ");
     }
     
     

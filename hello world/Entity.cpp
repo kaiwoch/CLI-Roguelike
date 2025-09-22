@@ -2,8 +2,9 @@
 
 Entity::Entity() {
     walkSpeed = 1;
+    
     max_hp = 100;
-    hp = 100;
+    hp = max_hp;
 }
 
 void Entity::MoveLeft(Map& map) {
@@ -11,8 +12,8 @@ void Entity::MoveLeft(Map& map) {
     leftPos.SetX(pos.GetX() - walkSpeed);
     leftPos.SetY(pos.GetY());
     
-    if (map.GetElement(leftPos) == ' ') {
-        map.SetElement(pos, ' ');
+    if (map.GetElement(leftPos) == " ") {
+        map.SetElement(pos, " ");
         pos = leftPos;
     }
 }
@@ -22,8 +23,8 @@ void Entity::MoveRight(Map& map) {
     rightPos.SetX(pos.GetX() + walkSpeed);
     rightPos.SetY(pos.GetY());
     
-    if (map.GetElement(rightPos) == ' ') {
-        map.SetElement(pos, ' ');
+    if (map.GetElement(rightPos) == " ") {
+        map.SetElement(pos, " ");
         pos = rightPos;
     }
 }
@@ -33,8 +34,8 @@ void Entity::MoveUp(Map& map) {
     upPos.SetX(pos.GetX());
     upPos.SetY(pos.GetY() - walkSpeed);
     
-    if (map.GetElement(upPos) == ' ') {
-        map.SetElement(pos, ' ');
+    if (map.GetElement(upPos) == " ") {
+        map.SetElement(pos, " ");
         pos = upPos;
     }
 }
@@ -44,8 +45,8 @@ void Entity::MoveDown(Map& map) {
     downPos.SetX(pos.GetX());
     downPos.SetY(pos.GetY() + walkSpeed);
     
-    if (map.GetElement(downPos) == ' ') {
-        map.SetElement(pos, ' ');
+    if (map.GetElement(downPos) == " ") {
+        map.SetElement(pos, " ");
         pos = downPos;
     }
 }
@@ -68,7 +69,7 @@ bool Entity::EntityIsNear(Entity object) {
     return false;
 } */
 
-void Entity::Attack(Entity* entity, int damage) {
+void Entity::Damage(Entity* entity, int damage) {
     entity->TakeDamage(damage);
 }
 
@@ -84,7 +85,7 @@ int Entity::GetHP() {
     return hp;
 }
 
-char Entity::GetSymbol() {
+std::string Entity::GetSymbol() {
     return symbol;
 }
 
@@ -93,6 +94,10 @@ void Entity::SetPosition(Coordinates position) {
 }
 
 void Entity::RandomAI(Map& map) {
+
+}
+
+void Entity::Attack(Map& map) {
 
 }
 

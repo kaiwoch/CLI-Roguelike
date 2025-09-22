@@ -4,7 +4,7 @@
 
 class FireBall : public Entity {
 private:
-    char next_symbol;
+    std::string next_symbol;
     Entity* next_object;
 public:
     FireBall(Map& map);
