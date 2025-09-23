@@ -1,4 +1,9 @@
 #include "Player.h"
+#ifdef _WIN32
+    #include <conio.h>
+#else
+    #include <ncurses.h>
+#endif
 
 Player::Player() : Entity() {
     symbol = "P";
@@ -60,7 +65,8 @@ void Player::UseItem(unsigned int index) {
             inventory.RemoveItem(item);
         }
     } else {
-        std::cout << "Item not found." << std::endl;
+        printw("Item not found.\n");
+        //std::cout << "Item not found." << std::endl;
     }
 }
 

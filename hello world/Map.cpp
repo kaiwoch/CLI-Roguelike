@@ -2,6 +2,12 @@
 #include "Entity.h"
 #include <iostream>
 
+#ifdef _WIN32
+    #include <conio.h>
+#else
+    #include <ncurses.h>
+#endif
+
 //Конструктор
 Map::Map() {
     GenerateMap();
@@ -31,12 +37,51 @@ std::string Map::GetElement(Coordinates coordinates) {
 
 //Отрисовка карты и запуск методов у объектов, находящихся на карте каждый кадр.
 void Map::PrintMap() {
+    //clear();
+    static bool colors_initialized = false;
+    if (!colors_initialized) {
+        if (has_colors()) {
+            start_color();
+            init_pair(1, COLOR_WHITE, COLOR_BLACK);
+            init_pair(2, COLOR_RED, COLOR_RED);
+            init_pair(3, COLOR_GREEN, COLOR_BLACK);
+            init_pair(4, COLOR_CYAN, COLOR_BLACK);
+            init_pair(5, COLOR_YELLOW, COLOR_BLACK);
+        }
+        colors_initialized = true;
+    }
     for (unsigned int y = 0; y < Size().GetY(); y++) {
         for (unsigned int x = 0; x < Size().GetX(); x++) {
-            std::cout << map[y][x] << " ";
+            std::string s = map[y][x];
+            
+            if (s == "P") {
+                attron(COLOR_PAIR(1));
+                printw("%s ", s.c_str());
+                attroff(COLOR_PAIR(1));
+            } else if (s == "*") {
+                attron(COLOR_PAIR(2));
+                printw("%s ", s.c_str());
+                attroff(COLOR_PAIR(2));
+            } else if (s == "#") {
+                attron(COLOR_PAIR(3));
+                printw("%s ", s.c_str());
+                attroff(COLOR_PAIR(3));
+            } else if (s == "M" || s == "W") {
+                attron(COLOR_PAIR(5));
+                printw("%s ", s.c_str());
+                attroff(COLOR_PAIR(3));
+            } else {
+                attron(COLOR_PAIR(4));
+                printw("%s ", s.c_str());
+                attroff(COLOR_PAIR(4));
+            }
         }
-        std::cout << std::endl;
+        printw("\n");
+            
+            //std::cout << map[y][x] << " ";
     }
+        //std::cout << std::endl;
+
 
     for (unsigned int i = 0; i < entities.size(); i++) {
         entities[i]->RandomAI(*this);
@@ -47,7 +92,7 @@ void Map::PrintMap() {
         if (entities[i]->GetSymbol() != "P") 
             entities[i]->Attack(*this);
     }
-
+    //refresh();
 }
 
 //Рандомный спавн Interectable

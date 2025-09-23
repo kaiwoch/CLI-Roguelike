@@ -6,6 +6,8 @@ private:
     bool isRunning;
     bool isDebug;
     Map map;
+    int GetInput();
+    void Print(const char *fmt, ...);
 public:
     Game();
     
