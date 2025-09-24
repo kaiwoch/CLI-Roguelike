@@ -1,21 +1,24 @@
 #include "Inventory.h"
 #ifdef _WIN32
     #include <conio.h>
+    #include <cstdarg>
 #else
     #include <ncurses.h>
 #endif
 
 void Inventory::PrintInventory() {
     //clear();
-    printw("       INVENTORY   \n");
-    printw("-======================-\n");
-    //std::cout << "       INVENTORY   " << std::endl;
-    //std::cout << "-======================-" << std::endl;
+    cf.Print("\n       INVENTORY   \n");
+    cf.Print("-======================-\n");
+    
     for (unsigned int i = 0; i < inventory.size(); i++) {
-        printw("%d. %s\n", i + 1, inventory[i]->GetName().c_str());
-        //std::cout << i + 1 << ". " <<  inventory[i]->GetName() << std::endl;
+        cf.Print("%d. %s\n", i + 1, inventory[i]->GetName().c_str());
     }
-    refresh();
+    #ifdef _WIN32
+    
+    #else
+        refresh();
+    #endif
 }
 
 void Inventory::AddItem(Item* item) {

@@ -3,6 +3,7 @@
 #include "Coordinates.h"
 #include "Interectable.h"
 #include "math.h"
+#include "CrossplatformFuncs.h"
 
 #pragma once
 
@@ -16,6 +17,7 @@ private:
     std::vector<Interectable*> objects;
     std::vector<Entity*> entities;
     std::vector<std::vector<std::string>> map;
+    CrossplatformFuns cf;
 public:
     Map();
     
@@ -30,7 +32,7 @@ public:
     void DeleteObject(Entity* object);
     Interectable* GetNearstInterectableObject(Coordinates position);
     Entity* GetNearstEntityObject(Coordinates position);
-    Entity* GetObject(Coordinates position);
+    Entity* GetObjectA(Coordinates position);
     void GenerateMap();
     int GetNeighbourCount(unsigned int x, unsigned int y);
     void SmoothMap();

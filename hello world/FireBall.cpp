@@ -11,7 +11,6 @@ void FireBall::RandomAI(Map& map) {
     
     if (next_symbol != " ") {
         if (next_object != nullptr) {
-            //std::cout << "BOOM!" << std::endl;
             std::cout << next_object->GetSymbol() << std::endl;
             Damage(next_object, damage);
         }
@@ -31,7 +30,7 @@ void FireBall::RandomAI(Map& map) {
     
 
     //map.SetElement(pos, next_symbol);
-    next_object = map.GetObject(next_position);
+    next_object = map.GetObjectA(next_position);
     next_symbol = map.GetElement(next_position);
     if (next_symbol == " ") {
         map.SetElement(pos, next_symbol);

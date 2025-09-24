@@ -31,9 +31,5 @@ public:
     std::string GetSymbol();
     void SetPosition(Coordinates position);
     
-    
-    //костыль
-    //bool EntityIsNear(Entity object);
-    
 };
 

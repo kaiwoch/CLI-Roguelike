@@ -1,11 +1,13 @@
 #include "Item.h"
 #include <vector>
 #include <iostream>
+#include "CrossplatformFuncs.h"
 #pragma once
 
 class Inventory {
 private:
     std::vector<Item*> inventory;
+    CrossplatformFuns cf;
 public:
     void PrintInventory();
     void AddItem(Item* item);

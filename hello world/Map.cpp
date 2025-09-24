@@ -1,12 +1,14 @@
 #include "Map.h"
-#include "Entity.h"
 #include <iostream>
+#include <cstdarg>
 
 #ifdef _WIN32
     #include <conio.h>
+    #include <windows.h>
 #else
     #include <ncurses.h>
 #endif
+#include "Entity.h"
 
 //Конструктор
 Map::Map() {
@@ -38,49 +40,29 @@ std::string Map::GetElement(Coordinates coordinates) {
 //Отрисовка карты и запуск методов у объектов, находящихся на карте каждый кадр.
 void Map::PrintMap() {
     //clear();
-    static bool colors_initialized = false;
-    if (!colors_initialized) {
-        if (has_colors()) {
-            start_color();
-            init_pair(1, COLOR_WHITE, COLOR_BLACK);
-            init_pair(2, COLOR_RED, COLOR_RED);
-            init_pair(3, COLOR_GREEN, COLOR_BLACK);
-            init_pair(4, COLOR_CYAN, COLOR_BLACK);
-            init_pair(5, COLOR_YELLOW, COLOR_BLACK);
+    #ifdef _WIN32
+
+    #else
+        static bool colors_initialized = false;
+        if (!colors_initialized) {
+            if (has_colors()) {
+                start_color();
+                init_pair(1, COLOR_WHITE, COLOR_BLACK);
+                init_pair(2, COLOR_RED, COLOR_RED);
+                init_pair(3, COLOR_GREEN, COLOR_BLACK);
+                init_pair(4, COLOR_CYAN, COLOR_BLACK);
+                init_pair(5, COLOR_YELLOW, COLOR_BLACK);
+            }
+            colors_initialized = true;
         }
-        colors_initialized = true;
-    }
+    #endif
     for (unsigned int y = 0; y < Size().GetY(); y++) {
         for (unsigned int x = 0; x < Size().GetX(); x++) {
             std::string s = map[y][x];
-            
-            if (s == "P") {
-                attron(COLOR_PAIR(1));
-                printw("%s ", s.c_str());
-                attroff(COLOR_PAIR(1));
-            } else if (s == "*") {
-                attron(COLOR_PAIR(2));
-                printw("%s ", s.c_str());
-                attroff(COLOR_PAIR(2));
-            } else if (s == "#") {
-                attron(COLOR_PAIR(3));
-                printw("%s ", s.c_str());
-                attroff(COLOR_PAIR(3));
-            } else if (s == "M" || s == "W") {
-                attron(COLOR_PAIR(5));
-                printw("%s ", s.c_str());
-                attroff(COLOR_PAIR(3));
-            } else {
-                attron(COLOR_PAIR(4));
-                printw("%s ", s.c_str());
-                attroff(COLOR_PAIR(4));
-            }
+            cf.SetColor(s);
         }
-        printw("\n");
-            
-            //std::cout << map[y][x] << " ";
+        cf.Print("\n");
     }
-        //std::cout << std::endl;
 
 
     for (unsigned int i = 0; i < entities.size(); i++) {
@@ -92,7 +74,7 @@ void Map::PrintMap() {
         if (entities[i]->GetSymbol() != "P") 
             entities[i]->Attack(*this);
     }
-    //refresh();
+    //refresh();====
 }
 
 //Рандомный спавн Interectable
@@ -185,7 +167,7 @@ Entity* Map::GetNearstEntityObject(Coordinates position) {
 }
 
 //Получить объект Entity по координатам
-Entity* Map::GetObject(Coordinates position) {
+Entity* Map::GetObjectA(Coordinates position) { //???????????????????????????????????????????????????????
     for (unsigned int i = 0; i < entities.size(); i++) {
         if (position.GetX() == entities[i]->GetPosition().GetX() && position.GetY() == entities[i]->GetPosition().GetY()) {
             return entities[i];
@@ -304,14 +286,13 @@ float Map::GetDirectionToPlayer(Entity* entity) {
 
 // Вывод основной информации в консоль
 void Map::Debug() {
-    std::cout << "Enities: " << std::endl;
+    cf.Print("%s\n", "Entities:");
     for (unsigned int i = 0; i < entities.size(); i++) {
-        std::cout << entities[i]->GetSymbol() << ": position: X: " << entities[i]->GetPosition().GetX() << " | Y: " << entities[i]->GetPosition().GetY() << " Dist to player: " << GetDistanceToPlayer(entities[i]) << " Dir to player: " << GetDirectionToPlayer(entities[i]) << " HP: " << entities[i]->GetHP() << "/" << entities[i]->GetMaxHP() << std::endl;
+        cf.Print("Char: %s PosX: %d PosY: %d DistToPlayer: %f DirToPlayer: %f HP: %d/%d\n", entities[i]->GetSymbol().c_str(), entities[i]->GetPosition().GetX(), entities[i]->GetPosition().GetY(), GetDistanceToPlayer(entities[i]), GetDirectionToPlayer(entities[i]), entities[i]->GetHP(), entities[i]->GetMaxHP());
     }
-
-    std::cout << "Interectable: " << std::endl;
+    cf.Print("%s\n", "Interectable:");
     for (unsigned int i = 0; i < objects.size(); i++) {
-        std::cout << objects[i]->GetSymbol() << ": position: X: " << objects[i]->GetPosition().GetX() << " | Y: " << objects[i]->GetPosition().GetY() << std::endl;
+        cf.Print("Char: %s PosX: %d PosY: %d\n", objects[i]->GetSymbol().c_str(), objects[i]->GetPosition().GetX(), objects[i]->GetPosition().GetY());
     }
 }
 
@@ -331,4 +312,3 @@ void Map::PrintLine(Entity* entity) {
     }
         
 }
-

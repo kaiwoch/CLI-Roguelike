@@ -65,7 +65,7 @@ void Player::UseItem(unsigned int index) {
             inventory.RemoveItem(item);
         }
     } else {
-        printw("Item not found.\n");
+        //printw("Item not found.\n");
         //std::cout << "Item not found." << std::endl;
     }
 }

@@ -1,9 +1,11 @@
 #include "Game.h"
 #include "Level.h"
 #include "Player.h"
+#include "MainMenu.h"
 #include <iostream>
 
 #ifdef _WIN32
+    #include <cstdarg>
     #include <conio.h>
 #else
     #include <ncurses.h>
@@ -15,39 +17,75 @@ Game::Game() {
 }
 
 void Game::Run() {
-    initscr();
-    noecho();
-    curs_set(0);
-    keypad(stdscr, TRUE);
-    
-    isDebug = false;
+    #ifdef _WIN32
+
+    #else
+        initscr();
+        noecho();
+        curs_set(0);
+        keypad(stdscr, TRUE);
+    #endif
+    MainMenu menu;
+    isDebug = true;
     Level level;
     Player player;
 
     map = level.NextLevel(&player);
     
     while(isRunning) {
-        clear();
-        //system("clear");
+        //это для кнопки
+        int tmp = 10;
+        #ifdef _WIN32
+            system("cls");
+        #else
+            clear();
+        #endif
+        
         if (isDebug) {
             map.Debug();
         }
-        Print("Player pos:\n");
-        //printw("Player pos:\n");
-        //std::cout << "Player pos:" << std::endl;
-        printw("X: %d | Y: %d | HP: %d/%d\n", player.GetPosition().GetX(), player.GetPosition().GetY(), player.GetHP(), player.GetMaxHP());
-        //std::cout << "X: " << player.GetPosition().GetX() << " | " << "Y: " << player.GetPosition().GetY() << " | HP: " << player.GetHP() << "/" << player.GetMaxHP() << std::endl;
-        printw("# # # # # # # # # # # # # # # # # S T A G E : %d # # # # # # # # # # # # # # # #", level.GetStageNumber());
-        //std::cout << "# # # # # # # # # # # # # # # # # S T A G E : " << level.GetStageNumber() <<" # # # # # # # # # # # # # # # #" << std::endl;
-        //char input;
+
+        cf.Print("# # # # # # # # # # # # # # # # # S T A G E : %d # # # # # # # # # # # # # # # #\n", level.GetStageNumber());
     
-        
         map.PrintMap();
-        refresh();
-        int key = GetInput();
+        PrintEntityHPBar(player);
+
+        auto object = map.GetNearstEntityObject(player.GetPosition());
+        if (object != nullptr) {
+            PrintEntityHPBar(*object);
+        }
+        #ifdef _WIN32
+
+        #else
+            refresh();
+        #endif
+        int key = cf.GetInput();
         
-        //std::cin >> input;
         switch (key) {
+            case 27:
+                while(true) {
+                    #ifdef _WIN32
+                        system("cls");
+                    #else
+                        clear();
+                    #endif
+                    cf.Print("\n");
+                    menu.Flush();
+                    menu.PrintButton(tmp);
+                    menu.PrintMenu();
+
+                    int choise = cf.GetInput();
+
+                    if (choise == 27) {
+                        break;
+                    } 
+                    if (choise == 's' && tmp < 30) {
+                        tmp+=10;
+                        cf.Print("%d", choise);
+                    } else if (choise == 'w' && tmp > 10) {
+                        tmp -= 10;
+                    }
+                }
             case 'a':
                 player.MoveLeft(map);
                 break;
@@ -71,8 +109,7 @@ void Game::Run() {
             case 'i':
                 while(true) {
                     player.PrintInventory();
-                    int choise = GetInput();
-                    //std::cout << choise << std::endl;
+                    int choise = cf.GetInput();
                     if (choise == 'i') {
                         break;
                     }
@@ -83,10 +120,11 @@ void Game::Run() {
                 player.Attack(map);
                 break;
             default:
+                cf.Print("%d", key);
                 break;
         }
         //isRunning = Stop();
-        refresh();
+        //refresh(); ===
     }
 }
 
@@ -94,23 +132,17 @@ bool Game::Stop() {
     return false;
 }
 
-int Game::GetInput() {
-#ifdef _WIN32
-    return _getch();
-#else
-    return getch();
-#endif
-}
-
-void Game::Print(const char *fmt, ...) {
-    va_list args;
-    va_start(args, fmt);
-    
-#ifdef _WIN32
-    vprintf(fmt, args);
-#else
-    vw_printw(stdscr, fmt, args);
-#endif
-    
-    va_end(args);
+void Game::PrintEntityHPBar(Entity& object) {
+    if (object.GetSymbol() == "*") {
+        return;
+    }
+    int procent = int(float(object.GetHP()) / float(object.GetMaxHP()) * 100) / 10;
+    cf.Print("%s %s ", object.GetSymbol().c_str() , "HP: [");
+    for (int i = 0; i < procent; i++) {
+        cf.SetColor("=");
+    }
+    for (int i = 0; i < 10 - procent; i++) {
+        cf.SetColor(" ");
+    }
+    cf.Print("%s %d/%d     ", "]", object.GetHP(), object.GetMaxHP());
 }
