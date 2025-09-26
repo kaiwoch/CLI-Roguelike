@@ -18,4 +18,5 @@ public:
     void SetMaxHP(int amount);
     void TakeDamage(int damage) override;
     void SetDamage(int amount);
+    bool IsAlive();
 };

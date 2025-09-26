@@ -66,14 +66,9 @@ void Map::PrintMap() {
 
 
     for (unsigned int i = 0; i < entities.size(); i++) {
-        entities[i]->RandomAI(*this);
+        entities[i]->Update(*this);
     }
 
-
-    for (unsigned int i = 0; i < entities.size(); i++) {
-        if (entities[i]->GetSymbol() != "P") 
-            entities[i]->Attack(*this);
-    }
     //refresh();====
 }
 

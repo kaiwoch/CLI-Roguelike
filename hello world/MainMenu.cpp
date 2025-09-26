@@ -1,6 +1,7 @@
 #include "MainMenu.h"
 
 MainMenu::MainMenu() {
+    symbol = "*";
 	width = 40;
 	height = 40;
 	BuildMenu();
@@ -11,7 +12,7 @@ void MainMenu::BuildMenu() {
 	for (unsigned int y = 0; y < width; y++) {
         for (unsigned int x = 0; x < height; x++) {
         	if (x == 0 || y == 0 || x == height - 1 || y == height - 1) {
-                line.push_back("#");
+                line.push_back(symbol);
             } else {
             	line.push_back(" ");
             }
@@ -23,7 +24,7 @@ void MainMenu::BuildMenu() {
 	for (unsigned int y = 0; y < width; y++) {
         for (unsigned int x = 0; x < height; x++) {
             if (x == 0 || y == 0 || x == height - 1 || y == height - 1) {
-                menu[y][x] = "#";
+                menu[y][x] = symbol;
             }
         }
     }
@@ -50,7 +51,7 @@ void MainMenu::PrintButton(int amount) {
 	for (unsigned int y = start_y; y < start_y + b_width; y++) {
         for (unsigned int x = start_x; x < start_x + b_height; x++) {
             if (x == start_x || y == start_y || x == start_x + b_height - 1 || y == start_y + b_width - 1) {
-                menu[y][x] = "#";
+                menu[y][x] = symbol;
             }
         }
     }
@@ -60,7 +61,7 @@ void MainMenu::Flush() {
 	for (unsigned int y = 0; y < width; y++) {
         for (unsigned int x = 0; x < height; x++) {
             if (x == 0 || y == 0 || x == height - 1 || y == height - 1) {
-                menu[y][x] = "#";
+                menu[y][x] = symbol;
             } else {
             	menu[y][x] = " ";
             }

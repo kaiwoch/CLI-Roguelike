@@ -53,25 +53,23 @@ void Mage::RandomAI(Map& map) {
 
 void Mage::Attack(Map& map) {
     Entity::Attack(map);
-    float dist = map.GetDistanceToPlayer(this);
-
-    if (dist < 7) {
-        if (timer >= 10) {
-            timer = 0;
-            
-            float dir = map.GetDirectionToPlayer(this);
+    
+    if (timer >= 10) {
+        timer = 0;
         
-            int x = std::round(GetPosition().GetX() + walkSpeed * std::cos(dir));
-            int y = std::round(GetPosition().GetY() - walkSpeed * std::sin(dir));
-        
-            Coordinates next_position;
-            next_position.SetX(x);
-            next_position.SetY(y);
-            if (map.GetElement(next_position) == " ") {
-                FireBall* fireball = new FireBall(map);
-                map.SpawnObject(fireball, next_position);
-            }
+        float dir = map.GetDirectionToPlayer(this);
+    
+        int x = std::round(GetPosition().GetX() + walkSpeed * std::cos(dir));
+        int y = std::round(GetPosition().GetY() - walkSpeed * std::sin(dir));
+    
+        Coordinates next_position;
+        next_position.SetX(x);
+        next_position.SetY(y);
+        if (map.GetElement(next_position) == " ") {
+            FireBall* fireball = new FireBall(map);
+            map.SpawnObject(fireball, next_position);
         }
     }
+
     timer++;
 }

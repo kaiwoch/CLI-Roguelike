@@ -5,6 +5,7 @@
 
 class MainMenu {
 private:
+	std::string symbol;
 	int width;
     int height;
 	std::vector<std::vector<std::string>> menu;

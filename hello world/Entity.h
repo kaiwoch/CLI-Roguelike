@@ -1,12 +1,21 @@
 #include "Map.h"
 #include "Coordinates.h"
 #include "Inventory.h"
+#include "CrossplatformFuncs.h"
 #include <string>
 #include <time.h>
 #pragma once
 
+enum State {
+    Idle,
+    Attack,
+    Die
+};
+
 class Entity {
 protected:
+    CrossplatformFuns cf;
+    State state;
     int max_hp;
     int hp;
     int damage;
@@ -30,6 +39,7 @@ public:
     int GetMaxHP();
     std::string GetSymbol();
     void SetPosition(Coordinates position);
-    
+    void Update(Map& map);
+    void SetState(State state); 
 };
 

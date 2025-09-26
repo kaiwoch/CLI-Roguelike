@@ -26,13 +26,16 @@ void Game::Run() {
         keypad(stdscr, TRUE);
     #endif
     MainMenu menu;
-    isDebug = true;
+    isDebug = false;
     Level level;
     Player player;
 
     map = level.NextLevel(&player);
     
     while(isRunning) {
+        if (!player.IsAlive()) {
+            break;
+        }
         //это для кнопки
         int tmp = 10;
         #ifdef _WIN32

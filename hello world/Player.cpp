@@ -82,3 +82,10 @@ void Player::SetDamage(int amount) {
     damage = amount;
 }
 
+bool Player::IsAlive() {
+    if (state == State::Die) {
+        return false;
+    }
+    return true;
+}
+

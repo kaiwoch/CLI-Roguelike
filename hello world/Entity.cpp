@@ -1,6 +1,7 @@
 #include "Entity.h"
 
 Entity::Entity() {
+    state = State::Idle;
     walkSpeed = 1;
     
     max_hp = 100;
@@ -93,5 +94,41 @@ void Entity::Attack(Map& map) {
 
 int Entity::GetMaxHP() {
     return max_hp;
+}
+
+void Entity::Update(Map& map) {
+    float dist = map.GetDistanceToPlayer(this);
+
+    if (dist < 7 && symbol != "*") SetState(State::Attack);
+    else SetState(State::Idle);
+
+    if (hp <= 0) SetState(State::Die);
+
+    switch (state) {
+    case State::Idle:
+        if (symbol != "P") {
+            RandomAI(map);
+        }
+        break;
+    case State::Attack:
+        if (symbol != "P") {
+            Attack(map);
+        }
+        break;
+
+    case State::Die:
+        map.DeleteObject(this);
+        break;
+
+    default:
+        if (symbol != "P") {
+            RandomAI(map);
+        }
+        break;
+    }
+}
+
+void Entity::SetState(State state) {
+    this->state = state;
 }
 
