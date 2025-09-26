@@ -1,10 +1,9 @@
 #include "Entity.h"
 #include "FireBall.h"
+
 #pragma once
 
 class Mage : public Entity {
-private:
-    int timer;
 public:
     Mage();
     void MoveLeft(Map& map) override;

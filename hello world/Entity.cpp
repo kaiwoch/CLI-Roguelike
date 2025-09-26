@@ -3,7 +3,7 @@
 Entity::Entity() {
     state = State::Idle;
     walkSpeed = 1;
-    
+    timer = 10;
     max_hp = 100;
     hp = max_hp;
 }
@@ -97,6 +97,7 @@ int Entity::GetMaxHP() {
 }
 
 void Entity::Update(Map& map) {
+    timer++;
     float dist = map.GetDistanceToPlayer(this);
 
     if (dist < 7 && symbol != "*") SetState(State::Attack);
@@ -116,8 +117,18 @@ void Entity::Update(Map& map) {
         }
         break;
 
+    //TODO: ВЫНЕСТИ В ОТДЕЛЬНУЮ ФУНКЦИЮ, СЕЙЧАС ЛЕНЬ
     case State::Die:
         map.DeleteObject(this);
+            if (map.GetDistanceToPlayer(this) < 2) {
+                Entity* player = map.GetObjectA(map.GetPlayerPosition());
+                if (player != nullptr) {
+                    for (unsigned int i = 0; i < inventory.GetInventory().size(); i++) {
+                        player->inventory.AddItem(inventory.GetInventory()[i]);
+                        cf.Print("Drop: %s\n", inventory.GetInventory()[i]->GetName().c_str());
+                    }
+                }
+            }
         break;
 
     default:

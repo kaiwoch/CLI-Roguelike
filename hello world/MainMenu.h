@@ -15,5 +15,6 @@ public:
 	MainMenu();
 	void PrintMenu();
 	void PrintButton(int amount);
+    void PrintText();
 	void Flush();
 };

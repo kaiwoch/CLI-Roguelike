@@ -4,6 +4,10 @@
 #include "CrossplatformFuncs.h"
 #include <string>
 #include <time.h>
+#include "Item.h"
+#include "ItemMaxHP.h"
+#include "ItemHeal.h"
+#include "ItemDamage.h"
 #pragma once
 
 enum State {
@@ -23,6 +27,7 @@ protected:
     int walkSpeed;
     std::string symbol;
     Inventory inventory;
+    int timer;
 public:
     Entity();
     virtual void MoveLeft(Map& map);
