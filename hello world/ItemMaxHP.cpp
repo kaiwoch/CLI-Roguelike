@@ -1,7 +1,7 @@
 #include "ItemMaxHP.h"
 #include "Player.h"
 
-MaxHPItem::MaxHPItem(std::string name, int maxHPAmount) : Item(name) {
+MaxHPItem::MaxHPItem(std::string name, int maxHPAmount) : Item(name, "MaxHP") {
 	this->maxHPAmount = maxHPAmount;
 }
 

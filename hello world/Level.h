@@ -13,6 +13,7 @@ private:
 public:
 	Level();
 	Map NextLevel(Player* player);
-	int GetStageNumber();	
+    Map GetCurrentMap();
+	int GetStageNumber();
 };
 

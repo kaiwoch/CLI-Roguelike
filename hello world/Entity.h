@@ -8,6 +8,10 @@
 #include "ItemMaxHP.h"
 #include "ItemHeal.h"
 #include "ItemDamage.h"
+#include "Include/nlohmann/json.hpp"
+
+using json = nlohmann::json;
+
 #pragma once
 
 enum State {
@@ -18,6 +22,7 @@ enum State {
 
 class Entity {
 protected:
+    std::string type;
     CrossplatformFuns cf;
     State state;
     int max_hp;
@@ -29,7 +34,7 @@ protected:
     Inventory inventory;
     int timer;
 public:
-    Entity();
+    Entity(std::string type);
     virtual void MoveLeft(Map& map);
     virtual void MoveRight(Map& map);
     virtual void MoveUp(Map& map);
@@ -39,12 +44,18 @@ public:
     virtual void Damage(Entity* entity, int damage);
     virtual void Attack(Map& map);
     virtual void TakeDamage(int damage);
-    Coordinates GetPosition();
-    int GetHP();
-    int GetMaxHP();
+    Coordinates GetPosition() const;
+    int GetHP() const;
+    Inventory GetInventory() const;
+    int GetMaxHP() const;
     std::string GetSymbol();
     void SetPosition(Coordinates position);
     void Update(Map& map);
-    void SetState(State state); 
+    void SetState(State state);
+
+    //===========================================
+    virtual std::string getType() const;
+    friend void to_json(json& j, const Entity& e);
+    friend void from_json(const json& j, Entity& e);
 };
 

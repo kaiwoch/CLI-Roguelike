@@ -1,11 +1,12 @@
 #include "Interectable.h"
 
 
-Interectable::Interectable(){
+Interectable::Interectable(std::string type){
+    this->type = type;
     isDoor = false;
 }
 
-Coordinates Interectable::GetPosition() {
+Coordinates Interectable::GetPosition() const {
     return pos;
 }
 
@@ -27,4 +28,12 @@ void Interectable::Open(Inventory &object_inventory) {
 
 bool Interectable::GetIsDoor() {
     return isDoor;
+}
+
+std::string Interectable::GetType() const {
+    return type;
+}
+
+Inventory Interectable::GetInventory() const {
+    return inventory;
 }

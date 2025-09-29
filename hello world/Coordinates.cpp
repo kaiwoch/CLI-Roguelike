@@ -1,10 +1,10 @@
 #include "Coordinates.h"
 
-int Coordinates::GetX() {
+int Coordinates::GetX() const {
     return x;
 }
 
-int Coordinates::GetY() {
+int Coordinates::GetY() const {
     return y;
 }
 

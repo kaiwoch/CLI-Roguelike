@@ -1,7 +1,7 @@
 #include "ItemDamage.h"
 #include "Player.h"
 
-DamageItem::DamageItem(std::string name, int damageAmount) : Item(name) {
+DamageItem::DamageItem(std::string name, int damageAmount) : Item(name, "Damage") {
 	this->damageAmount = damageAmount;
 }
 

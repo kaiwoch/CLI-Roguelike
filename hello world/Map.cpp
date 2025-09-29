@@ -307,3 +307,15 @@ void Map::PrintLine(Entity* entity) {
     }
         
 }
+
+std::vector<Interectable*> Map::GetInterectable() {
+    return objects;
+}
+
+std::vector<Entity*> Map::GetEntity() {
+    return entities;
+}
+
+std::vector<std::vector<std::string>> Map::GetMap() {
+    return map;
+}

@@ -3,6 +3,7 @@
 #include "Player.h"
 #include "MainMenu.h"
 #include <iostream>
+#include "SaveSystem.h"
 
 #ifdef _WIN32
     #include <cstdarg>
@@ -17,6 +18,7 @@ Game::Game() {
 }
 
 void Game::Run() {
+    // это должно быть в первую очередь!
     #ifdef _WIN32
 
     #else
@@ -25,6 +27,7 @@ void Game::Run() {
         curs_set(0);
         keypad(stdscr, TRUE);
     #endif
+    SaveSystem save;
     MainMenu menu;
     isDebug = false;
     Level level;
@@ -43,7 +46,6 @@ void Game::Run() {
         #else
             clear();
         #endif
-        
         if (isDebug) {
             map.Debug();
         }
@@ -66,13 +68,14 @@ void Game::Run() {
         
         switch (key) {
             case 27:
-                while(true) {
+                while(isRunning) {
                     #ifdef _WIN32
                         system("cls");
                     #else
                         clear();
                     #endif
                     cf.Print("\n");
+                    
                     menu.Flush();
                     menu.PrintButton(tmp);
                     menu.PrintMenu();
@@ -84,10 +87,25 @@ void Game::Run() {
                     } 
                     if (choise == 's' && tmp < 30) {
                         tmp+=10;
-                        cf.Print("%d", choise);
                     } else if (choise == 'w' && tmp > 10) {
                         tmp -= 10;
                     }
+                    if (choise == 10 || choise == 13) {
+                        switch (tmp) {
+                            case 10:
+                                break;
+                            case 20:
+                                save.TestFunc(level);
+                                break;
+                            case 30:
+                                isRunning = Stop();
+                                break;
+                                
+                            default:
+                                break;
+                        }
+                    }
+                    
                 }
             case 'a':
                 player.MoveLeft(map);

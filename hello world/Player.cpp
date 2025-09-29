@@ -5,7 +5,7 @@
     #include <ncurses.h>
 #endif
 
-Player::Player() : Entity() {
+Player::Player() : Entity("Player") {
     symbol = "P";
     damage = 20;
 }
@@ -89,3 +89,6 @@ bool Player::IsAlive() {
     return true;
 }
 
+std::string Player::getType() const {
+    return Entity::getType();
+}

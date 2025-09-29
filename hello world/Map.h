@@ -42,6 +42,10 @@ public:
     float GetDistanceToPlayer(Entity* entity);
     float GetDirectionToPlayer(Entity* entity);
     
+    std::vector<Interectable*> GetInterectable();
+    std::vector<Entity*> GetEntity();
+    std::vector<std::vector<std::string>> GetMap();
+    
     //test
     void PrintLine(Entity* entity);
 };

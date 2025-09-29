@@ -42,3 +42,7 @@ Map Level::NextLevel(Player* player) {
 int Level::GetStageNumber() {
 	return num_stage;
 }
+
+Map Level::GetCurrentMap() {
+    return map;
+}

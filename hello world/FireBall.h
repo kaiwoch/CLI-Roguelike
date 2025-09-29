@@ -10,5 +10,6 @@ public:
     FireBall(Map& map);
     
     void RandomAI(Map& map) override;
-    
+    std::string getType() const override;
+
 };

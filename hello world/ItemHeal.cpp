@@ -1,7 +1,7 @@
 #include "ItemHeal.h"
 #include "Player.h"
 
-HealItem::HealItem(std::string name, int healAmount) : Item(name) {
+HealItem::HealItem(std::string name, int healAmount) : Item(name, "Heal") {
 	this->healAmount = healAmount;
 }
 

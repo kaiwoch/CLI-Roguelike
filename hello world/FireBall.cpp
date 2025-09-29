@@ -1,6 +1,6 @@
 #include "FireBall.h"
 
-FireBall::FireBall(Map& map) : Entity() {
+FireBall::FireBall(Map& map) : Entity("FireBall") {
     damage = 10;
     symbol = "*";
     next_symbol = " ";
@@ -41,4 +41,8 @@ void FireBall::RandomAI(Map& map) {
     }
     
     
+}
+
+std::string FireBall::getType() const {
+    return Entity::getType();
 }

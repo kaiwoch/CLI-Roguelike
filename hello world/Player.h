@@ -19,4 +19,5 @@ public:
     void TakeDamage(int damage) override;
     void SetDamage(int amount);
     bool IsAlive();
+    std::string getType() const override;
 };

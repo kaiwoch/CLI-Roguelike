@@ -12,6 +12,8 @@ public:
     void MoveDown(Map& map) override;
     void RandomAI(Map& map) override;
     void Attack(Map& map) override;
+
+    std::string getType() const override;
 };
 
 

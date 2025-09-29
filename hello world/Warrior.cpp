@@ -1,6 +1,6 @@
 #include "Warrior.h"
 
-Warrior::Warrior() : Entity() {
+Warrior::Warrior() : Entity("Warrior") {
     MaxHPItem* RingOfLife = new MaxHPItem("ring of life", 150);
     HealItem* HealthPotion = new HealItem("health potion", 50);
     HealItem* Bread = new HealItem("bread", 10);
@@ -61,4 +61,6 @@ void Warrior::RandomAI(Map& map) {
     }
 }
 
-
+std::string Warrior::getType() const {
+    return Entity::getType();
+}

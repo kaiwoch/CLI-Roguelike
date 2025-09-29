@@ -1,6 +1,6 @@
 #include "Mage.h"
 
-Mage::Mage() : Entity() {
+Mage::Mage() : Entity("Mage") {
     MaxHPItem* RingOfLife = new MaxHPItem("ring of life", 150);
     HealItem* HealthPotion = new HealItem("health potion", 50);
     HealItem* Bread = new HealItem("bread", 10);
@@ -84,4 +84,8 @@ void Mage::Attack(Map& map) {
             map.SpawnObject(fireball, next_position);
         }
     }
+}
+
+std::string Mage::getType() const {
+    return Entity::getType();
 }

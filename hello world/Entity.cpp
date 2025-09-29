@@ -1,6 +1,7 @@
 #include "Entity.h"
 
-Entity::Entity() {
+Entity::Entity(std::string type) {
+    this->type = type;
     state = State::Idle;
     walkSpeed = 1;
     timer = 10;
@@ -64,7 +65,7 @@ void Entity::Damage(Entity* entity, int damage) {
     entity->TakeDamage(damage);
 }
 
-Coordinates Entity::GetPosition() {
+Coordinates Entity::GetPosition() const {
     return pos;
 }
 
@@ -72,7 +73,7 @@ void Entity::PrintInventory() {
     inventory.PrintInventory();
 }
 
-int Entity::GetHP() {
+int Entity::GetHP() const {
     return hp;
 }
 
@@ -92,7 +93,7 @@ void Entity::Attack(Map& map) {
 
 }
 
-int Entity::GetMaxHP() {
+int Entity::GetMaxHP() const {
     return max_hp;
 }
 
@@ -143,3 +144,10 @@ void Entity::SetState(State state) {
     this->state = state;
 }
 
+std::string Entity::getType() const {
+    return type;
+}
+
+Inventory Entity::GetInventory() const {
+    return inventory;
+}

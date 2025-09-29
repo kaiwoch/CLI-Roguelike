@@ -2,7 +2,7 @@
 #include <iostream>
 #include <vector>
 
-Chest::Chest() : Interectable() {
+Chest::Chest() : Interectable("Chest") {
     MaxHPItem* RingOfLife = new MaxHPItem("ring of life", 150);
     HealItem* HealthPotion = new HealItem("health potion", 50);
     HealItem* Bread = new HealItem("bread", 10); 
