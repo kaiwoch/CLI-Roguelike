@@ -1,6 +1,7 @@
 #include "Entity.h"
 
 Entity::Entity(std::string type) {
+    inventory = new Inventory;
     this->type = type;
     state = State::Idle;
     walkSpeed = 1;
@@ -70,7 +71,7 @@ Coordinates Entity::GetPosition() const {
 }
 
 void Entity::PrintInventory() {
-    inventory.PrintInventory();
+    inventory->PrintInventory();
 }
 
 int Entity::GetHP() const {
@@ -124,9 +125,9 @@ void Entity::Update(Map& map) {
             if (map.GetDistanceToPlayer(this) < 2) {
                 Entity* player = map.GetObjectA(map.GetPlayerPosition());
                 if (player != nullptr) {
-                    for (unsigned int i = 0; i < inventory.GetInventory().size(); i++) {
-                        player->inventory.AddItem(inventory.GetInventory()[i]);
-                        cf.Print("Drop: %s\n", inventory.GetInventory()[i]->GetName().c_str());
+                    for (unsigned int i = 0; i < inventory->GetInventory().size(); i++) {
+                        player->inventory->AddItem(inventory->GetInventory()[i]);
+                        cf.Print("Drop: %s\n", inventory->GetInventory()[i]->GetName().c_str());
                     }
                 }
             }
@@ -148,7 +149,7 @@ std::string Entity::getType() const {
     return type;
 }
 
-Inventory Entity::GetInventory() const {
+Inventory* Entity::GetInventory() const {
     return inventory;
 }
 
@@ -162,4 +163,12 @@ void Entity::SetHP(int hp) {
 
 void Entity::SetMaxHP(int max_hp) {
     this->max_hp = max_hp;
+}
+
+int Entity::GetDamage() const {
+    return damage;
+}
+
+void Entity::SetDamage(int amount) {
+    damage = amount;
 }

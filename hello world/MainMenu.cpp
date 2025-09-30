@@ -60,7 +60,7 @@ void MainMenu::PrintButton(int amount) {
 }
 
 void MainMenu::PrintText() {
-    std::vector<std::string> text = {"START", "SAVE", "EXIT"};
+    std::vector<std::string> text = {"LOAD", "SAVE", "EXIT"};
     
     for (unsigned int i = 0; i < text.size(); i++) {
         int start_y = (i + 1) * 10;

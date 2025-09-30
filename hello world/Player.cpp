@@ -35,7 +35,7 @@ void Player::MoveDown(Map& map) {
 bool Player::Use(Map& map) {
     auto object = map.GetNearstInterectableObject(pos);
     if (object != nullptr) {
-        object->Open(inventory);
+        object->Open(*inventory);
         map.DeleteObject(object);
         return object->GetIsDoor();
     }
@@ -58,11 +58,11 @@ void Player::Heal(int healAmount) {
 }
 
 void Player::UseItem(unsigned int index) {
-    if (index <= inventory.GetInventory().size()) {
-        auto item = inventory.ChoiseItem(index);
+    if (index <= inventory->GetInventory().size()) {
+        auto item = inventory->ChoiseItem(index);
         if (item != nullptr) {
             item->UseItem(*this);
-            inventory.RemoveItem(item);
+            inventory->RemoveItem(item);
         }
     } else {
         //printw("Item not found.\n");
@@ -76,10 +76,6 @@ void Player::TakeDamage(int damage) {
 
 void Player::SetMaxHP(int amount) {
     max_hp = amount;
-}
-
-void Player::SetDamage(int amount) {
-    damage = amount;
 }
 
 bool Player::IsAlive() {

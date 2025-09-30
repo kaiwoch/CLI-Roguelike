@@ -11,7 +11,7 @@ Mage::Mage() : Entity("Mage") {
     int rand_size = rand() % items.size();
     for (unsigned int i = 0; i < rand_size; i++) {
         int rand_item = rand() % items.size();
-        inventory.AddItem(items[rand_item]);
+        inventory->AddItem(items[rand_item]);
     }
     
     

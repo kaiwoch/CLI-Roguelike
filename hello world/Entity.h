@@ -31,7 +31,7 @@ protected:
     Coordinates pos;
     int walkSpeed;
     std::string symbol;
-    Inventory inventory;
+    Inventory* inventory;
     int timer;
 public:
     Entity(std::string type);
@@ -46,8 +46,10 @@ public:
     virtual void TakeDamage(int damage);
     Coordinates GetPosition() const;
     int GetHP() const;
-    Inventory GetInventory() const;
+    Inventory* GetInventory() const;
     int GetMaxHP() const;
+    int GetDamage() const;
+    void SetDamage(int amount);
     std::string GetSymbol();
     void SetPosition(Coordinates position);
     void Update(Map& map);

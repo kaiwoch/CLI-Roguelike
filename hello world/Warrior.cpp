@@ -11,11 +11,12 @@ Warrior::Warrior() : Entity("Warrior") {
     int rand_size = rand() % items.size();
     for (unsigned int i = 0; i < rand_size; i++) {
         int rand_item = rand() % items.size();
-        inventory.AddItem(items[rand_item]);
+        inventory->AddItem(items[rand_item]);
     }
-    
+    damage = 25;
     symbol = "W";
     max_hp = 100;
+    timer = 2;
 }
 
 //Если передавать по значению, то игрок будет заспавнен в копии карты
@@ -59,6 +60,36 @@ void Warrior::RandomAI(Map& map) {
             MoveDown(map);
             break;
     }
+}
+
+void Warrior::Attack(Map& map) {
+    Entity::Attack(map);
+    float dist = map.GetDistanceToPlayer(this);
+    
+    if (timer >= 2) {
+        timer = 0;
+        if (dist < 2.f) {
+            Entity* player = map.GetObjectA(map.GetPlayerPosition());
+            Damage(player, damage);
+            return;
+        }
+    }
+
+    float dir = map.GetDirectionToPlayer(this);
+
+    int x = std::round(GetPosition().GetX() + walkSpeed * std::cos(dir));
+    int y = std::round(GetPosition().GetY() - walkSpeed * std::sin(dir));
+
+    Coordinates next_pos;
+    next_pos.SetX(x);
+    next_pos.SetY(y);
+
+    if (map.GetElement(next_pos) == " ") {
+        map.SetElement(pos, " ");
+        pos = next_pos;
+        map.SetElement(pos, symbol);
+    }
+
 }
 
 std::string Warrior::getType() const {

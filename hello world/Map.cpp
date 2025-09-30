@@ -317,6 +317,14 @@ std::vector<Entity*> Map::GetEntity() {
 }
 
 std::vector<std::vector<std::string>> Map::GetMap() {
+    for (unsigned int y = 0; y < width; y++) {
+        for (unsigned int x = 0; x < height; x++) {
+            if (map[y][x] == "P" || map[y][x] == "M" || map[y][x] == "W") {
+                map[y][x] = " ";
+            }
+        }
+        
+    }
     return map;
 }
 

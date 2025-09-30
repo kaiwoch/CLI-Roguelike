@@ -6,6 +6,7 @@
 #include "SaveSystem.h"
 
 #ifdef _WIN32
+    #include <windows.h>
     #include <cstdarg>
     #include <conio.h>
 #else
@@ -29,14 +30,14 @@ void Game::Run() {
     #endif
     SaveSystem save;
     MainMenu menu;
-    isDebug = true;
+    isDebug = false;
     Level level;
-    Player player;
+    Player* player = new Player;
 
-    map = level.NextLevel(&player);
+    map = level.NextLevel(player);
     
     while(isRunning) {
-        if (!player.IsAlive()) {
+        if (!player->IsAlive()) {
             break;
         }
         //это для кнопки
@@ -53,9 +54,9 @@ void Game::Run() {
         cf.Print("# # # # # # # # # # # # # # # # # S T A G E : %d # # # # # # # # # # # # # # # #\n", level.GetStageNumber());
     
         map.PrintMap();
-        PrintEntityHPBar(player);
+        PrintEntityHPBar(*player);
 
-        auto object = map.GetNearstEntityObject(player.GetPosition());
+        auto object = map.GetNearstEntityObject(player->GetPosition());
         if (object != nullptr) {
             PrintEntityHPBar(*object);
         }
@@ -70,7 +71,7 @@ void Game::Run() {
             case 27:
                 while(isRunning) {
                     #ifdef _WIN32
-                        system("cls");
+                        cf.ClearScreen();
                     #else
                         clear();
                     #endif
@@ -93,9 +94,16 @@ void Game::Run() {
                     if (choise == 10 || choise == 13) {
                         switch (tmp) {
                             case 10:
+                                {
+                                    level = save.Load();
+                                    map = level.GetCurrentMap();
+                                    Entity* loaded_player = map.GetPlayer();
+                                    loaded_player->PrintInventory();
+                                    player = dynamic_cast<Player*>(loaded_player);
+                                }
                                 break;
                             case 20:
-                                save.TestFunc(level);
+                                save.Save(level);
                                 break;
                             case 30:
                                 isRunning = Stop();
@@ -108,52 +116,42 @@ void Game::Run() {
                     
                 }
             case 'a':
-                player.MoveLeft(map);
+                player->MoveLeft(map);
                 break;
             case 'd':
-                player.MoveRight(map);
+                player->MoveRight(map);
                 break;
             case 'w':
-                player.MoveUp(map);
+                player->MoveUp(map);
                 break;
             case 's':
-                player.MoveDown(map);
+                player->MoveDown(map);
                 break;
             case 'e':
                 {
-                    bool isDoor = player.Use(map);
+                    bool isDoor = player->Use(map);
                     if (isDoor) {
-                        map = level.NextLevel(&player);
+                        map = level.NextLevel(player);
                     }
                 }
                 break;
             case 'i':
                 while(true) {
-                    player.PrintInventory();
+                    player->PrintInventory();
                     int choise = cf.GetInput();
                     if (choise == 'i') {
                         break;
                     }
-                    player.UseItem(choise - 48);
+                    player->UseItem(choise - 48);
                 }
                 break;
             case 'x':
-                player.Attack(map);
+                player->Attack(map);
                 break;
-            case 'l':
-                level = save.Load();
-                map = level.GetCurrentMap();
-                Entity* loaded_player = map.GetPlayer();
-                if (loaded_player != nullptr) {
-                    //TODO: Не доделал
-                }
-                
             default:
                 cf.Print("%d", key);
                 break;
         }
-        //isRunning = Stop();
-        //refresh(); ===
     }
 }
 

@@ -11,11 +11,7 @@ void to_json(json& j, const Item& i) {
                 {"amount", i.GetAmount()}
             };
     }
-/*void from_json(const json& j, Item& i) {
-    i.SetName(j.at("name").get<std::string>());
-    i.SetType(j.at("type").get<std::string>());
-    i.SetAmount(j.at("amount").get<int>());
-} */
+
 
 void to_json(json& j, const Coordinates& c) {
         j = json{{"x", c.GetX()},
@@ -32,10 +28,11 @@ void to_json(json& j, const Entity& e) {
                 {"hp", e.GetHP()},
                 {"max_hp", e.GetMaxHP()},
                 {"pos", e.GetPosition()},
+                {"dmg", e.GetDamage()},
                 {"inv", json::array()}
             };
         //TODO: Я особо не заморачивался, тут лютый костыль, срочно исправить
-        std::vector<Item*> inventory = e.GetInventory().GetInventory();
+        std::vector<Item*> inventory = e.GetInventory()->GetInventory();
 
         for (Item* item : inventory) {
             if (item) {
@@ -108,6 +105,7 @@ void from_json(const json& j, Entity& e) {
         e.SetType(j.at("type").get<std::string>());
         e.SetHP(j.at("hp").get<int>());
         e.SetMaxHP(j.at("max_hp").get<int>());
+        e.SetDamage(j.at("dmg").get<int>());
 
         Coordinates pos = j.at("pos").get<Coordinates>();
         e.SetPosition(pos);
@@ -115,7 +113,7 @@ void from_json(const json& j, Entity& e) {
         if (j.contains("inv")) {
             for (const auto& item_json : j["inv"]) {
                 Item* item = CreateItemFromJson(item_json);
-                e.GetInventory().AddItem(item);
+                e.GetInventory()->AddItem(item);
             }
         }
 }
@@ -187,7 +185,7 @@ void from_json(const json& j, Level& level) {
 }
 
 
-void SaveSystem::TestFunc(Level level) {
+void SaveSystem::Save(Level level) {
     //cf.Print("Current dir: %s", std::filesystem::current_path().c_str());
     json Document;
     Document["stage_level"] = level.GetStageNumber();

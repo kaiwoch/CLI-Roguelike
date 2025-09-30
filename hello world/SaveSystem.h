@@ -8,6 +8,6 @@ class SaveSystem {
 private:
     CrossplatformFuns cf;
 public:
-    void TestFunc(Level level);
+    void Save(Level level);
     Level Load();
 };

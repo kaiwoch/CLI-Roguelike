@@ -79,3 +79,19 @@ void CrossplatformFuns::Print(const char *fmt, ...) {
     
     va_end(args);
 }
+
+void CrossplatformFuns::ClearScreen() {
+#ifdef _WIN32
+    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+    CONSOLE_SCREEN_BUFFER_INFO csbi;
+    DWORD count;
+    DWORD cellCount;
+
+    if (!GetConsoleScreenBufferInfo(hConsole, &csbi)) return;
+    cellCount = csbi.dwSize.X * csbi.dwSize.Y;
+
+    FillConsoleOutputCharacter(hConsole, ' ', cellCount, {0, 0}, &count);
+    FillConsoleOutputAttribute(hConsole, csbi.wAttributes, cellCount, {0, 0}, &count);
+    SetConsoleCursorPosition(hConsole, {0, 0});
+#endif
+}

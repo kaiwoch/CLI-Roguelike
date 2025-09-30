@@ -17,7 +17,6 @@ public:
     void Heal(int healAmount);
     void SetMaxHP(int amount);
     void TakeDamage(int damage) override;
-    void SetDamage(int amount);
     bool IsAlive();
     std::string getType() const override;
 };

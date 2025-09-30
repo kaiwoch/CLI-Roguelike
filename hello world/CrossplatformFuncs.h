@@ -14,4 +14,5 @@ public:
 	void Print(const char *fmt, ...);
 	int GetInput();
 	void SetColor(std::string s);
+    void ClearScreen();
 };
