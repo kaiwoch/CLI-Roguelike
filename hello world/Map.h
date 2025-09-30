@@ -46,6 +46,11 @@ public:
     std::vector<Entity*> GetEntity();
     std::vector<std::vector<std::string>> GetMap();
     
+    void SetMap(std::vector<std::vector<std::string>> map);
+    void AddEntity(Entity* entity);
+    void AddInterectable(Interectable* inter);
+    Entity* GetPlayer();
+    
     //test
     void PrintLine(Entity* entity);
 };

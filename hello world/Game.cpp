@@ -29,7 +29,7 @@ void Game::Run() {
     #endif
     SaveSystem save;
     MainMenu menu;
-    isDebug = false;
+    isDebug = true;
     Level level;
     Player player;
 
@@ -140,6 +140,14 @@ void Game::Run() {
             case 'x':
                 player.Attack(map);
                 break;
+            case 'l':
+                level = save.Load();
+                map = level.GetCurrentMap();
+                Entity* loaded_player = map.GetPlayer();
+                if (loaded_player != nullptr) {
+                    //TODO: Не доделал
+                }
+                
             default:
                 cf.Print("%d", key);
                 break;

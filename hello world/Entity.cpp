@@ -151,3 +151,15 @@ std::string Entity::getType() const {
 Inventory Entity::GetInventory() const {
     return inventory;
 }
+
+void Entity::SetType(std::string type) {
+    this->type = type;
+}
+
+void Entity::SetHP(int hp) {
+    this->hp = hp;
+}
+
+void Entity::SetMaxHP(int max_hp) {
+    this->max_hp = max_hp;
+}

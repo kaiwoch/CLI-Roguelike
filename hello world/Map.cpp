@@ -319,3 +319,24 @@ std::vector<Entity*> Map::GetEntity() {
 std::vector<std::vector<std::string>> Map::GetMap() {
     return map;
 }
+
+void Map::SetMap(std::vector<std::vector<std::string>> map) {
+    this->map = map;
+}
+
+void Map::AddEntity(Entity* entity) {
+    entities.push_back(entity);
+}
+
+void Map::AddInterectable(Interectable* inter) {
+    objects.push_back(inter);
+}
+
+Entity* Map::GetPlayer() {
+    for (unsigned int i = 0; i < entities.size(); i++) {
+        if (entities[i]->GetSymbol() == "P") {
+            return entities[i];
+        }
+    }
+    return nullptr;
+}

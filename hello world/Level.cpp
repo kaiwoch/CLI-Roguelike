@@ -46,3 +46,11 @@ int Level::GetStageNumber() {
 Map Level::GetCurrentMap() {
     return map;
 }
+
+void Level::SetStageNumber(int num_stage) {
+    this->num_stage = num_stage;
+}
+
+void Level::SetMap(Map map) {
+    this->map = map;
+}

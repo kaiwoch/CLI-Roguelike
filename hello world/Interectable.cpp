@@ -37,3 +37,7 @@ std::string Interectable::GetType() const {
 Inventory Interectable::GetInventory() const {
     return inventory;
 }
+
+void Interectable::SetType(std::string type) {
+    this->type = type;
+}

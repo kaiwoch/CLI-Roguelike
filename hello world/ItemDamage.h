@@ -3,9 +3,7 @@
 #pragma once
 
 class DamageItem : public Item {
-private:
-	int damageAmount;
 public:
-	DamageItem(std::string name, int damageAmount);
+	DamageItem(std::string name, int amount);
 	void UseItem(Player& player) override;
 };

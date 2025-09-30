@@ -57,5 +57,9 @@ public:
     virtual std::string getType() const;
     friend void to_json(json& j, const Entity& e);
     friend void from_json(const json& j, Entity& e);
+    
+    void SetType(std::string type);
+    void SetHP(int hp);
+    void SetMaxHP(int max_hp);
 };
 

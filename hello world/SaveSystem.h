@@ -9,5 +9,5 @@ private:
     CrossplatformFuns cf;
 public:
     void TestFunc(Level level);
-    void Load();
+    Level Load();
 };

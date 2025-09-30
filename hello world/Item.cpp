@@ -16,3 +16,15 @@ void Item::UseItem(Player& player) {
 std::string Item::GetType() const{
     return type;
 }
+
+void Item::SetName(std::string name) {
+    this->name = name;
+}
+
+int Item::GetAmount() const {
+    return amount;
+}
+
+void Item::SetAmount(int amount) {
+    this->amount = amount;
+}

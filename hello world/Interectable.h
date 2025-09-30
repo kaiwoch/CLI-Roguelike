@@ -27,5 +27,7 @@ public:
     friend void to_json(json& j, const Interectable& i);
     friend void from_json(const json& j, Interectable& i);
     
+    void SetType(std::string type);
+    
     virtual ~Interectable() = default;
 };

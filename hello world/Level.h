@@ -14,6 +14,8 @@ public:
 	Level();
 	Map NextLevel(Player* player);
     Map GetCurrentMap();
+    void SetMap(Map map);
 	int GetStageNumber();
+    void SetStageNumber(int num_stage);
 };
 
